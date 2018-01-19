@@ -426,7 +426,9 @@ public class LoginActivity extends ObservableAppCompatActivity {
 
             @Override
             public void onLoginFailed() {
-            
+	    	// You can report custom issue using Fn.issue().
+	    	// Check custom issue section for more details
+	        Fn.issue(this, "Facebook login failed");
             }
         });
     }
