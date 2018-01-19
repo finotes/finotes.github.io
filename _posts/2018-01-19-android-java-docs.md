@@ -142,7 +142,7 @@ OkHttp3Client  client = new OkHttp3Client(builder).build();
 ```
 
 #### Whitelist Hosts
-Optionaly, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.  
+Optionally, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.  
 If launcher activity is annotated with @Observe, then only API calls to hosts listed in @Observe will be monitored.
 
 ```java
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 ```
-Optionaly, You may provide a custom timeout for hostnames. This will raise an Issue for any network call to the specified hosts, that takes more than the specified time for completion.  
+Optionally, You may provide a custom timeout for hostnames. This will raise an Issue for any network call to the specified hosts, that takes more than the specified time for completion.  
 Do note that specifing timeout will not interfere in any way with your network calls.
 
 
@@ -215,7 +215,7 @@ Activity Trail
 
 ### Memory monitoring
 
-Optionaly, You may extend your Application class from ObservableApplication. This will report any app level memory issues that may arise in your application.
+Optionally, You may extend your Application class from ObservableApplication. This will report any app level memory issues that may arise in your application.
 
 ```java
 public class BlogApplication extends Application {
