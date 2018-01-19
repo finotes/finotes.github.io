@@ -12,7 +12,7 @@ above.
 
 In-order to integrate finotes in your Android project, add the code below to project level build.gradle
 
-```Gradle
+```gradle
 
 allprojects {
     repositories {
@@ -49,7 +49,7 @@ If you are using proguard in your release build, you need to add the following t
 ## Initialize
 You need to call the Fn.init() function in your launcher activity onCreate() function.
 
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -61,7 +61,7 @@ protected void onCreate(Bundle savedInstanceState){
 
 #### DryRun
 During development, you can set the dryRun mode, so that the issues raised will not be sent to the server. Every other feature except the issue sync to server will work as same.
-```
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -73,7 +73,7 @@ protected void onCreate(Bundle savedInstanceState){
 #### VerboseLog
 There are two variations of logging available in Finotes, Verbose and Error. You can toggle them using corresponding APIs.  
 Activating verbose will print all logs in LogCat including error and warning logs.
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -84,7 +84,7 @@ protected void onCreate(Bundle savedInstanceState){
 ```
 ##### ErrorLog
 If only error and warning logs needs to be printed,
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -255,7 +255,7 @@ public String getUserNameFromDb(String userId){
 }
 ```
 Function “getUserNameFromDb()” can be monitored by changing the function call to,
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
