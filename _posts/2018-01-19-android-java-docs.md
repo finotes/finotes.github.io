@@ -49,4 +49,70 @@ If you are using proguard in your release build, you need to add the following t
 }
 ```
 
+### Initialize
+You need to call the Fn.init() function in your launcher activity onCreate() function.
+
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    Fn.init(this);
+}
+```
+### Catch Global Exceptions.
+In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    Fn.init(this);
+    Fn.catchUnCaughtExceptions();
+}
+
+```
+
+### Monitoring network calls
+
+You need to use the custom OkHttp3Client() provided by Fi.notes in your network calls.
+
+
+```Java
+    import com.finotes.android.finotescore.OkHttp3Client;
+    ...
+    ...
+    ...
+
+    client = new OkHttp3Client(new OkHttpClient.Builder()).build();
+```
+
+
+All network calls using custom OkHttp3Client() provided by Fi.notes, from your application will be automatically monitored for issues like status code errors, timeout issues, exceptions and other failures.
+
+
+Add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.
+If needed, you may provide a timeout for the api calls along with the host names.
+
+
+```Java
+@Observe(domains = {
+        @Domain(hostName = "host.com"),
+        @Domain(hostName = "p.anotherhost.com", timeOut = 8000)
+        })
+public class MainActivity extends AppCompatActivity {
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    	   Fn.init(this);
+```
+
+
+
+
 
