@@ -222,7 +222,7 @@ public String getUserNameFromDb(String userId){
     return userName;
 }
 ```
-You need to tag the function that needs to be monitored using @Observe annotation.
+You need to tag the function that needs to be monitored using @Observe annotation and the function needs to be 'public'.
 
 This will allow Fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
@@ -242,7 +242,8 @@ public String getUserNameFromDb(String userId){
     return userName;
 }
 ```
-Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.
+Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.  
+An issue will be raised if an exception is raised inside a function that is being monitored by Fi.notes.
 
 
 #### Function overloading
@@ -326,6 +327,88 @@ public class DBUtils {
     }
 }
 ```
+
+### Chained Function calls
+
+You can connect multiple functions using ‘nextFunctionId’ and 'nextFunctionClass' properties in @Observe annotation.
+
+Lets consider Facebook LOGIN process in an application.
+
+When user clicks on the facebook login button the login workflow will take the user to a custom facebook screen where the user authenticates and comes back with a list of permissions that the user has approved, then a login API call is initiated to the app backend and the result could be success or failure.
+
+```Java
+public class LoginActivity extends ObservableAppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        
+        fbLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Inside a click listener or an interface function you need to specify the class object
+                // as in this case LoginActivity.this and 'this' would not work.
+                Fn.call("onFbLoginClicked", LoginActivity.this);
+            }
+        });
+    }
+
+    @Observe(nextFunctionId = "makeLoginApiCall" , expectedChainedExecutionTime = 10000)
+    public void onFbLoginClicked() {
+        //Start the fb login process.
+        facebookLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
+            @Override
+            public void onLoginComplete(LoginResult loginResult) {
+                Fn.call("makeLoginApiCall", LoginActivity.this, loginResult.getToken(), loginResult.getUserId());
+            }
+
+            @Override
+            public void onLoginFailed() {
+            
+            }
+        });
+    }
+    
+    @Observe(nextFunctionId = "processUserLogin", expectedChainedExecutionTime = 5000)
+    public void makeLoginApiCall(String fbToken, String fbUserId){
+        new LoginAPI().call(fbToken, fbUserId);
+    }
+    
+    @Override
+    public void onApiCompleted(JSONObject response) {
+        Fn.call("processUserLogin", LoginActivity.this, response);
+    }
+    
+    public void processUserLogin(JSONObject response) {
+        if(response.isSuccess()){
+            //Move to MainActivity
+        }
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
