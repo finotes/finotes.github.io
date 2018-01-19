@@ -236,13 +236,13 @@ protected void onCreate(Bundle savedInstanceState) {
     String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
 }
 
-@Observe(expectedExecutionTime = 1000)
+@Observe(expectedExecutionTime = 1400)
 public String getUserNameFromDb(String userId){
     String userName = User.findById(userId).getName();
     return userName;
 }
 ```
-Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1000 milliseconds. If the database query takes more than 1000 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.
+Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.
 
 
 #### Function overloading
@@ -263,19 +263,42 @@ protected void onCreate(Bundle savedInstanceState) {
     String userName = (String) Fn.call(“getUserNameFromDBWithEmailAndToken", this, "email", "RENKDS123S");
 }
 
-@Observe(expectedExecutionTime = 1000)
+@Observe(expectedExecutionTime = 1400)
 public String getUserNameFromDb(String userId){
     String userName = User.findById(userId).getName();
     return userName;
 }
 
-@Observe(id = "getUserNameFromDBWithEmailAndToken", expectedExecutionTime = 1000)
+@Observe(id = "getUserNameFromDBWithEmailAndToken", expectedExecutionTime = 1400)
 public String getUserNameFromDb(String email, String token){
     String userName = User.findUniqueByProperties(email,token).getName();
     return userName;
 }
 ```
 
+#### Function in Separate Class file
+
+If the function is defined in a separate class file and needs to be invoked, then instead of passing "this" you can pass the corresponding object in Fn.call()
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    
+    DBUtils dbUtils = new DbUtils();
+    String userName = (String) Fn.call(“getUserNameFromDb", dbUtils, "123-sd-12");
+
+}
+
+public class DBUtils {
+
+    @Observe(expectedExecutionTime = 1400)
+    public String getUserNameFromDb(String userId){
+        String userName = User.findById(userId).getName();
+        return userName;
+    }
+}
+```
 
 
 
