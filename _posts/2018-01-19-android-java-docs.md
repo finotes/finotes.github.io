@@ -94,10 +94,10 @@ All network calls using custom OkHttp3Client() provided by Fi.notes, from your a
 
 ##### Volley
 ##### Retrofit
-Inorder to find out how you can integrate OkHttp3Client in Volley, Retrofit, do check out [OkHttp3Client in Volley and Retrofit](https://www.google.com)
+Inorder to find out how you can integrate OkHttp3Client in Volley, Retrofit, do check out [OkHttp3Client in Volley and Retrofit](https://www.google.com)  
 
 
-Optionaly, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.
+Optionaly, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.  
 If launcher activity is annotated with @Observe, then only API calls to hosts listed in @Observe will be monitored.
 
 ```Java
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 ```
-Optionaly, You may provide a custom timeout for hostnames. This will raise an Issue for any network call to the specified hosts, that takes more than the specified time for completion. 
+Optionaly, You may provide a custom timeout for hostnames. This will raise an Issue for any network call to the specified hosts, that takes more than the specified time for completion.  
 Do note that specifing timeout will not interfere in any way with your network calls.
 
 
@@ -149,44 +149,112 @@ public class MainActivity extends ObservableAppCompatActivity {
 }
 
 ```
-
-On finotes dashboard, you will be able to view the screen activity for 3 minutes before an issue was raised. 
-```
-Activity Trail
-
-    ActivityWelcome:onCreate   11:19:24:469
-
-    MapActivity:onCreate    11:19:24:708
-
-    MapActivity:onStart    11:19:26:983
-
-    MapActivity:onResume    11:19:27:012
-
-    ActivityWelcome:onDestroy    11:19:28:515
-
-    MapActivity:onPause    11:20:17:806
-
-    ContactsActivity:onCreate    11:20:17:863
-
-    ContactsActivity:onStart    11:20:17:953
-
-    ContactsActivity:onResume    11:20:17:972
-
-    ContactsActivity:onPause    11:20:20:513
-
-    MapActivity:onResume    11:20:20:561
-
-```
-
-
 You may extend from the list below.
-
 ```
     ObservableAppCompatActivity 
     ObservableActivity 
     ObservableFragmentActivity 
     ObservableFragment
 ```
+Once all Activities and Fragments are extended from corresponding Observables,  
+Once an issue is raised, on finotes dashboard, you will be able to view the screen activity for 3 minutes before that issue was raised. 
+```
+Activity Trail
+
+    ActivityWelcome:onCreate     11:19:24:469
+    MapActivity:onCreate         11:19:24:708
+    MapActivity:onStart          11:19:26:983
+    MapActivity:onResume         11:19:27:012
+    ActivityWelcome:onDestroy    11:19:28:515
+    MapActivity:onPause          11:20:17:806
+```
+
+### Memory monitoring
+
+Optionaly, You may extend your Application class from ObservableApplication. This will report any app level memory issues that may arise in your application.
+
+```Java
+public class BlogApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+}
+
+Change to,
+
+public class BlogApplication extends ObservableApplication {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+}
+```
+### Function call
+You may monitor function calls for return value, exceptions and execution delays using Fn.call() and @Observe annotation.  
+A regular function call will be,
+
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    String userName = getUserNameFromDb("123-sd-12");
+
+}
+
+public String getUserNameFromDb(String userId){
+    String userName = Db.findById(userId).getName();
+    return userName;
+}
+```
+Function “getUserNameFromDb()” can be monitored by changing the function call to,
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    
+    String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
+}
+
+@Observe
+public String getUserNameFromDb(String userId){
+    String userName = Db.findById(userId).getName();
+    return userName;
+}
+```
+You need to tag the function that needs to be monitored using @Observe annotation.
+
+This will allow Fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
+
+You can control all the above said parameters in @Observe annotation.
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    
+    String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
+}
+
+@Observe(expectedExecutionTime = 1000)
+public String getUserNameFromDb(String userId){
+    String userName = Db.findById(userId).getName();
+    return userName;
+}
+```
+Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1000 milliseconds. If the database query takes more than 1000 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.
+
+
+
+
+
+
+
+
+
 
 
 
