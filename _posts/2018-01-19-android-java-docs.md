@@ -30,7 +30,7 @@ allprojects {
 
 Then in app level build.gradle
 
-```Gradle
+```gradle
 compile('com.finotes:finotescore:1.0@aar') {
     transitive = true;
 }
@@ -38,7 +38,7 @@ compile('com.finotes:finotescore:1.0@aar') {
 #### Progruard
 If you are using proguard in your release build, you need to add the following to your proguard-rules.pro file.
 
-```
+```gradle
 -keep class com.finotes.android.finotescore.* { *; }
 
 -keepclassmembers class * {
@@ -102,7 +102,7 @@ protected void onCreate(Bundle savedInstanceState){
 You need to use the custom OkHttp3Client() provided by Fi.notes in your network calls.
 
 
-```Java
+```java
     import com.finotes.android.finotescore.OkHttp3Client;
     ...
     ...
@@ -114,7 +114,7 @@ All network calls using custom OkHttp3Client() provided by Fi.notes, from your a
 
 ##### Volley
 In order to add OkHttp3Client to Volley, set the client to OkHttpStack().
-```Java
+```java
 OkHttp3Client client = new OkHttp3Client(new OkHttpClient.Builder()).build();
 RequestQueue mRequestQueue = 
 	Volley.newRequestQueue(context,new OkHttpStack(client));
@@ -123,7 +123,7 @@ mRequestQueue.add(jsonObjReq);
 
 ##### Retrofit
 Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Retrofit.Builder()
-```Java
+```java
 OkHttp3Client client = new OkHttp3Client(new OkHttpClient.Builder()).build();
 Retrofit retrofit = new Retrofit.Builder()
 	.baseUrl(API_URL)
@@ -134,7 +134,7 @@ Retrofit retrofit = new Retrofit.Builder()
 
 ##### retryOnConnectionFailure 
 ##### connectTimeout
-```Java
+```java
 OkHttpClient.Builder builder = new OkHttpClient.Builder()
 	.connectTimeout(15, TimeUnit.SECONDS)
 	.retryOnConnectionFailure(false);
@@ -145,7 +145,7 @@ OkHttp3Client  client = new OkHttp3Client(builder).build();
 Optionaly, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.  
 If launcher activity is annotated with @Observe, then only API calls to hosts listed in @Observe will be monitored.
 
-```Java
+```java
 @Observe(domains = {
         @Domain(hostName = "host.com"),
         @Domain(hostName = "p.anotherhost.com", timeOut = 8000)
@@ -169,7 +169,7 @@ Do note that specifing timeout will not interfere in any way with your network c
 
 When an issue is raised, inorder to get user screen flow for the current session, you need to extend your Activities and Fragments from ObservableActivity or ObservableFragment.
 
-```Java
+```java
 public class MainActivity extends AppCompatActivity {
 
 
@@ -218,7 +218,7 @@ Activity Trail
 
 Optionaly, You may extend your Application class from ObservableApplication. This will report any app level memory issues that may arise in your application.
 
-```Java
+```java
 public class BlogApplication extends Application {
     @Override
     public void onCreate() {
@@ -239,7 +239,7 @@ public class BlogApplication extends ObservableApplication {
 You may monitor function calls for return value, exceptions and execution delays using Fn.call() and @Observe annotation.  
 A regular function call will be,
 
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -278,7 +278,7 @@ You can control all the above said parameters in @Observe annotation.
 
 ##### expectedExecutionTime
 
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -302,7 +302,7 @@ An issue will be raised if an exception is raised inside a function that is bein
 #### Function overloading
 
 You need to provide an explicit ID in @Observe annotation to the function incase of function overloading.  
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -333,7 +333,7 @@ public String getUserNameFromDb(String email, String token){
 #### Function in Separate Class file
 
 If the function is defined in a separate class file and needs to be invoked, then instead of passing "this" you can pass the corresponding object in Fn.call()
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -358,7 +358,7 @@ public class DBUtils {
 
 For static functions, pass corresponding .class instead of object in Fn.call() to invoke static method.
 
-```Java
+```java
 public void onHttpCallCompleted(JSONObject httpResponseJSONObject) {
     
     long userTimestamp = (long) Fn.call(“getUserTimestampFromJSON", DBUtils.class, httpResponseJSONObject);
@@ -393,7 +393,7 @@ When user clicks on the facebook login button the login workflow will take the u
 ##### nextFunctionClass
 ##### expectedChainedExecutionTime
 
-```Java
+```java
 public class LoginActivity extends ObservableAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -468,7 +468,7 @@ Here in 'makeLoginApiCall' function, if it returns false, an issue will be raise
 
 ### Catch Global Exceptions.
 In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
-```Java
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -482,7 +482,7 @@ protected void onCreate(Bundle savedInstanceState){
 
 ### Custom Exceptions
 You can report custom exceptions using the Fn.exception() API.
-```Java
+```java
 try {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("key","value");
@@ -493,7 +493,7 @@ try {
 
 ### Custom Issue
 You can report custom issues using the Fn.issue() API.
-```Java
+```java
 private void paymentCompleted(String userIdentifier, int type){
     //Handle post payment.
 }
@@ -506,11 +506,11 @@ private void paymentFailed(String userIdentifier, String reason){
 
 ### Listen for Issue
 You can listen for and access every issue in realtime using the Fn.listenForIssue() API.
-```
+```java
 Fn.listenForIssue(new IssueFoundListener() {
     @Override
     public void issueFound(IssueView issue) {
-       ….
+	  ….
 	  ….
 	  ….	
     }
