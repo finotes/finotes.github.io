@@ -92,9 +92,10 @@ You need to use the custom OkHttp3Client() provided by Fi.notes in your network 
 
 All network calls using custom OkHttp3Client() provided by Fi.notes, from your application will be automatically monitored for issues like status code errors, timeout issues, exceptions and other failures.
 
+Inorder to find out how you can integrate OkHttp3Client in Volley, Retrofit, do check out [OkHttp3Client in Volley and Retrofit](https://www.google.com)
 
-Add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.
-If needed, you may provide a timeout for the api calls along with the host names.
+
+Optionaly, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.
 
 
 ```Java
@@ -109,8 +110,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    	   Fn.init(this);
+        Fn.init(this);
+    }
+}
 ```
+You may provide a timeout for the api calls for corresponding hostnames. This will raise an Issue for all the network calls to that particular host that takes more than the specified time. Do note that specifing timeout will not interfere in any with your network calls
 
 
 
