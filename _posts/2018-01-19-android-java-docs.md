@@ -201,8 +201,7 @@ You may extend from the list below.
     ObservableFragmentActivity 
     ObservableFragment
 ```
-Once all Activities and Fragments are extended from corresponding Observables,  
-Once an issue is raised, on finotes dashboard, you will be able to view the screen activity for 3 minutes before that issue was raised. 
+Once Activities and Fragments are extended from corresponding Observables, when an issue is raised, on finotes dashboard, you will be able to view screen activity for 3 minutes before the issue was raised. 
 ```
 Activity Trail
 
