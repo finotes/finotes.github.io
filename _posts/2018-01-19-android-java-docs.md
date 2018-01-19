@@ -161,8 +161,9 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 ```
-Optionally, You may provide a custom timeout for hostnames. This will raise an Issue for any network call to the specified hosts, that takes more than the specified time for completion.  
-Do note that specifing timeout will not interfere in any way with your network calls.
+Optionally, You may provide a custom timeout for hostnames. This will raise an Issue for any network call to the 
+ied hosts, that takes more than the specified time for completion.  
+Do note that specifying timeout will not interfere in any way with your network calls.
 
 
 ### Activity/Fragment monitoring
