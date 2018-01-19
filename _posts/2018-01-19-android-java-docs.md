@@ -202,7 +202,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 
 public String getUserNameFromDb(String userId){
-    String userName = Db.findById(userId).getName();
+    String userName = User.findById(userId).getName();
     return userName;
 }
 ```
@@ -218,7 +218,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 @Observe
 public String getUserNameFromDb(String userId){
-    String userName = Db.findById(userId).getName();
+    String userName = User.findById(userId).getName();
     return userName;
 }
 ```
@@ -238,14 +238,43 @@ protected void onCreate(Bundle savedInstanceState) {
 
 @Observe(expectedExecutionTime = 1000)
 public String getUserNameFromDb(String userId){
-    String userName = Db.findById(userId).getName();
+    String userName = User.findById(userId).getName();
     return userName;
 }
 ```
 Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1000 milliseconds. If the database query takes more than 1000 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.
 
 
+#### Function overloading
 
+You need to provide an explicit ID in @Observe annotation to the function incase of function overloading.  
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    // Here the function name "getUserNameFromDb" is passed in Fn.call().
+    // This will trigger the getUserNameFromDb(String userId) function.    
+    String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
+
+    // Here the id "getUserNameFromDBWithEmailAndToken" specified in @Observe annotation is passed in Fn.call().
+    // This will trigger the getUserNameFromDb(String email, String token) function.    
+    String userName = (String) Fn.call(“getUserNameFromDBWithEmailAndToken", this, "email", "RENKDS123S");
+}
+
+@Observe(expectedExecutionTime = 1000)
+public String getUserNameFromDb(String userId){
+    String userName = User.findById(userId).getName();
+    return userName;
+}
+
+@Observe(id = "getUserNameFromDBWithEmailAndToken", expectedExecutionTime = 1000)
+public String getUserNameFromDb(String email, String token){
+    String userName = User.findUniqueByProperties(email,token).getName();
+    return userName;
+}
+```
 
 
 
