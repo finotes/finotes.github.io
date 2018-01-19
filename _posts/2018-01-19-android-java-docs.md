@@ -71,7 +71,8 @@ protected void onCreate(Bundle savedInstanceState){
 }
 ```
 #### VerboseLog
-There are two variations of logging available in Finotes, Verbose and Error. You can toggle them using corresponding APIs.
+There are two variations of logging available in Finotes, Verbose and Error. You can toggle them using corresponding APIs.  
+Activating verbose will print all logs in LogCat including error and warning logs.
 ```Java
 @Override
 protected void onCreate(Bundle savedInstanceState){
@@ -105,16 +106,40 @@ You need to use the custom OkHttp3Client() provided by Fi.notes in your network 
     import com.finotes.android.finotescore.OkHttp3Client;
     ...
     ...
-    ...
-
+    
     client = new OkHttp3Client(new OkHttpClient.Builder()).build();
 ```
 
 All network calls using custom OkHttp3Client() provided by Fi.notes, from your application will be automatically monitored for issues like status code errors, timeout issues, exceptions and other failures.
 
 ##### Volley
+In order to add OkHttp3Client to Volley, set the client to OkHttpStack().
+```Java
+OkHttp3Client client = new OkHttp3Client(new OkHttpClient.Builder()).build();
+RequestQueue mRequestQueue = 
+	Volley.newRequestQueue(context,new OkHttpStack(client));
+mRequestQueue.add(jsonObjReq);
+```
+
 ##### Retrofit
-Inorder to find out how you can integrate OkHttp3Client in Volley, Retrofit, do check out [OkHttp3Client in Volley and Retrofit](https://www.google.com)  
+Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Retrofit.Builder()
+```Java
+OkHttp3Client client = new OkHttp3Client(new OkHttpClient.Builder()).build();
+Retrofit retrofit = new Retrofit.Builder()
+	.baseUrl(API_URL)
+	.client(client)
+	.addConverterFactory(GsonConverterFactory.create())
+	.build();
+```
+
+##### retryOnConnectionFailure 
+##### connectTimeout
+```Java
+OkHttpClient.Builder builder = new OkHttpClient.Builder()
+	.connectTimeout(15, TimeUnit.SECONDS)
+	.retryOnConnectionFailure(false);
+OkHttp3Client  client = new OkHttp3Client(builder).build();
+```
 
 #### Whitelist Hosts
 Optionaly, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.  
