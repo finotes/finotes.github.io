@@ -5,12 +5,12 @@ title: "Android SDK Documentation"
 
 ## Pre requisites
 
-Finotes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
+Fi.notes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
 above.
 
 ## Integration
 
-In-order to integrate finotes in your Android project, add the code below to project level build.gradle
+In-order to integrate fi.notes in your Android project, add the code below to project level build.gradle
 
 ```gradle
 
@@ -71,7 +71,7 @@ protected void onCreate(Bundle savedInstanceState){
 }
 ```
 #### VerboseLog
-There are two variations of logging available in Finotes, Verbose and Error. You can toggle them using corresponding APIs.  
+There are two variations of logging available in Fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
 Activating verbose will print all logs in LogCat including error and warning logs.
 ```java
 @Override
@@ -201,7 +201,7 @@ You may extend from the list below.
     ObservableFragmentActivity 
     ObservableFragment
 ```
-Once Activities and Fragments are extended from corresponding Observables, when an issue is raised, on finotes dashboard, you will be able to view screen activity for 3 minutes before the issue was raised. 
+Once Activities and Fragments are extended from corresponding Observables, when an issue is raised, on fi.notes dashboard, you will be able to view screen activity for 3 minutes before the issue was raised. 
 ```
 Activity Trail
 
