@@ -360,7 +360,7 @@ public class LoginActivity extends ObservableAppCompatActivity {
         });
     }
     
-    // Here @Observe makes sure that 'makeLoginApiCall' function needs to be called within '10000' milliseconds.
+    // Here @Observe monitors if 'makeLoginApiCall' function is called within '10000' milliseconds.
     @Observe(nextFunctionId = "makeLoginApiCall",  
                 nextFunctionClass = LoginActivity.class, 
                 expectedChainedExecutionTime = 10000)
@@ -380,16 +380,18 @@ public class LoginActivity extends ObservableAppCompatActivity {
         });
     }
     
-    // Here @Observe makes sure that 'processUserLogin' function needs to be called within '5000' milliseconds.
+    // Here @Observe monitors if 'processUserLogin' function is called within '5000' milliseconds.
     @Observe(nextFunctionId = "processUserLogin"
                 nextFunctionClass = LoginActivity.class, 
                 expectedChainedExecutionTime = 5000)
-    public void makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet){
+    public boolean makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet){
         if (permissionSet.contains("publish_actions")){
             //On login API success 'onApiCompleted' function will be called.
             new LoginAPI().call(fbToken, fbUserId);
+            return true;
         }else{
             //Toast to user "Publish permission is required"
+            return false;
         }
     }
     
