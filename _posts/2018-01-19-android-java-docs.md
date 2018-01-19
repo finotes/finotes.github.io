@@ -110,7 +110,7 @@ You need to use the custom OkHttp3Client() provided by Fi.notes in your network 
     client = new OkHttp3Client(new OkHttpClient.Builder()).build();
 ```
 
-All network calls using custom OkHttp3Client() provided by Fi.notes, from your application will be automatically monitored for issues like status code errors, timeout issues, exceptions and other failures.
+Issues like status code errors, timeout issues, exceptions and other failures will be reported for all network calls using custom OkHttp3Client() provided by Fi.notes, from your application .
 
 ##### Volley
 In order to add OkHttp3Client to Volley, set the client to OkHttpStack().
@@ -143,7 +143,7 @@ OkHttp3Client  client = new OkHttp3Client(builder).build();
 
 #### Whitelist Hosts
 Optionally, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.  
-If launcher activity is annotated with @Observe, then only API calls to hosts listed in @Observe will be monitored.
+If launcher activity is annotated with @Observe, then, only issues from API calls to hosts listed in @Observe will be raised.
 
 ```java
 @Observe(domains = {
@@ -166,7 +166,7 @@ ied hosts, that takes more than the specified time for completion.
 Do note that specifying timeout will not interfere in any way with your network calls.
 
 
-### Activity/Fragment monitoring
+### Activity/Fragment trail
 
 When an issue is raised, inorder to get user screen flow for the current session, you need to extend your Activities and Fragments from ObservableActivity or ObservableFragment.
 
@@ -214,7 +214,7 @@ Activity Trail
     MapActivity:onPause          11:20:17:806
 ```
 
-### Memory monitoring
+### Low Memory Reporting 
 
 Optionally, You may extend your Application class from ObservableApplication. This will report any app level memory issues that may arise in your application.
 
@@ -236,7 +236,7 @@ public class BlogApplication extends ObservableApplication {
 }
 ```
 ### Function call
-You may monitor function calls for return value, exceptions and execution delays using Fn.call() and @Observe annotation.  
+You can raise return value issues, exceptions and execution delays in functions using Fn.call() and @Observe annotation.  
 A regular function call will be,
 
 ```java
@@ -254,7 +254,7 @@ public String getUserNameFromDb(String userId){
     return userName;
 }
 ```
-Function “getUserNameFromDb()” can be monitored by changing the function call to,
+Function “getUserNameFromDb()” call needs to be changed to,
 ```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -270,7 +270,7 @@ public String getUserNameFromDb(String userId){
     return userName;
 }
 ```
-You need to tag the function that needs to be monitored using @Observe annotation and the function needs to be 'public'.
+You need to tag the function using @Observe annotation and the function should to be 'public'.
 
 This will allow Fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
@@ -296,7 +296,7 @@ public String getUserNameFromDb(String userId){
 ##### Returns NULL
 ##### Exception in function
 Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.  
-An issue will be raised if an exception is raised inside a function that is being monitored by Fi.notes.
+An issue will be raised when exception occurs inside a function that is annotated with @Observe and is called using Fn.call().
 
 
 #### Function overloading
@@ -412,7 +412,7 @@ public class LoginActivity extends ObservableAppCompatActivity {
         });
     }
     
-    // Here @Observe monitors if 'makeLoginApiCall' function is called within '10000' milliseconds.
+    // Here function 'makeLoginApiCall' is expected to be called in under '10000' milliseconds.
     @Observe(nextFunctionId = "makeLoginApiCall",  
                 nextFunctionClass = LoginActivity.class, 
                 expectedChainedExecutionTime = 10000)
@@ -434,7 +434,7 @@ public class LoginActivity extends ObservableAppCompatActivity {
         });
     }
     
-    // Here @Observe monitors if 'processUserLogin' function is called within '5000' milliseconds.
+    // Here function 'processUserLogin' is expeected to be called in under '5000' milliseconds.
     @Observe(nextFunctionId = "processUserLogin"
                 nextFunctionClass = LoginActivity.class, 
                 expectedChainedExecutionTime = 5000)
