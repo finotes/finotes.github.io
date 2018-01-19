@@ -29,16 +29,16 @@ allprojects {
 ```
 
 Then in app level build.gradle
-
 ```gradle
 compile('com.finotes:finotescore:1.0@aar') {
     transitive = true;
 }
 ```
+
 #### Progruard
 If you are using proguard in your release build, you need to add the following to your proguard-rules.pro file.
 
-```gradle
+```
 -keep class com.finotes.android.finotescore.* { *; }
 
 -keepclassmembers class * {
