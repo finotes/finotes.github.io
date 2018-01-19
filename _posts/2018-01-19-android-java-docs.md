@@ -417,7 +417,6 @@ public class LoginActivity extends ObservableAppCompatActivity {
                 nextFunctionClass = LoginActivity.class, 
                 expectedChainedExecutionTime = 10000)
     public void onFbLoginClicked() {
-        //Start the fb login process.
         facebookLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
             @Override
             public void onLoginComplete(LoginResult loginResult) {
