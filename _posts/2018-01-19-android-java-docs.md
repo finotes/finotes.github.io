@@ -261,7 +261,7 @@ protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     
-    String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
+    String userName = (String) Fn.call("getUserNameFromDb", this, "123-sd-12");
 }
 
 @Observe
@@ -284,7 +284,7 @@ protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     
-    String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
+    String userName = (String) Fn.call("getUserNameFromDb", this, "123-sd-12");
 }
 
 @Observe(expectedExecutionTime = 1400)
@@ -310,12 +310,12 @@ protected void onCreate(Bundle savedInstanceState) {
 
     // Here the function name "getUserNameFromDb" is passed in Fn.call().
     // This will trigger the getUserNameFromDb(String userId) function.    
-    String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
+    String userName = (String) Fn.call("getUserNameFromDb", this, "123-sd-12");
 
     // Here the id "getUserNameFromDBWithEmailAndToken" specified in 
     // @Observe annotation is passed in Fn.call().
     // This will trigger the getUserNameFromDb(String email, String token) function.    
-    String userName = (String) Fn.call(“getUserNameFromDBWithEmailAndToken", 
+    String userName = (String) Fn.call("getUserNameFromDBWithEmailAndToken", 
 						this, "email", "RENKDS123S");
 }
 
@@ -342,7 +342,7 @@ protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_main);
     
     DBUtils dbUtils = new DbUtils();
-    String userName = (String) Fn.call(“getUserNameFromDb", dbUtils, "123-sd-12");
+    String userName = (String) Fn.call("getUserNameFromDb", dbUtils, "123-sd-12");
 
 }
 
@@ -363,7 +363,7 @@ For static functions, pass corresponding .class instead of object in Fn.call() t
 ```java
 public void onHttpCallCompleted(JSONObject httpResponseJSONObject) {
     
-    long userTimestamp = (long) Fn.call(“getUserTimestampFromJSON", DBUtils.class, httpResponseJSONObject);
+    long userTimestamp = (long) Fn.call("getUserTimestampFromJSON", DBUtils.class, httpResponseJSONObject);
 
 }
 
