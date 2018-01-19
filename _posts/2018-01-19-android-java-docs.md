@@ -3,12 +3,12 @@ layout: post
 title: "Android SDK Documentation"
 ---
 
-### Pre requisites
+## Pre requisites
 
 Finotes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
 above.
 
-### Integration
+## Integration
 
 In-order to integrate finotes in your Android project, add the code below to project level build.gradle
 
@@ -46,7 +46,7 @@ If you are using proguard in your release build, you need to add the following t
 }
 ```
 
-### Initialize
+## Initialize
 You need to call the Fn.init() function in your launcher activity onCreate() function.
 
 ```Java
@@ -58,21 +58,45 @@ protected void onCreate(Bundle savedInstanceState){
     Fn.init(this);
 }
 ```
-### Catch Global Exceptions.
-In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
+
+#### DryRun
+During development, you can set the dryRun mode, so that the issues raised will not be sent to the server. Every other feature except the issue sync to server will work as same.
+```
+@Override
+protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    //Second parameter in Fn.init() toggles dryRun flag, which is false by default. 
+    Fn.init(this, true , false);
+}
+```
+#### VerboseLog
+There are two variations of logging available in Finotes, Verbose and Error. You can toggle them using corresponding APIs.
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    //Third parameter in Fn.init() toggles the verbose mode.
+    Fn.init(this, true , true);
+}
+```
+##### ErrorLog
+If only error and warning logs needs to be printed,
 ```Java
 @Override
 protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    Fn.init(this);
-    Fn.catchUnCaughtExceptions();
+    Fn.init(this, true , false);
+    Fn.logError(true);
 }
-
 ```
 
-### Monitoring network calls
+## Reporting Issues
+
+### Report Network Call Failure
 
 You need to use the custom OkHttp3Client() provided by Fi.notes in your network calls.
 
@@ -86,14 +110,13 @@ You need to use the custom OkHttp3Client() provided by Fi.notes in your network 
     client = new OkHttp3Client(new OkHttpClient.Builder()).build();
 ```
 
-
 All network calls using custom OkHttp3Client() provided by Fi.notes, from your application will be automatically monitored for issues like status code errors, timeout issues, exceptions and other failures.
 
 ##### Volley
 ##### Retrofit
 Inorder to find out how you can integrate OkHttp3Client in Volley, Retrofit, do check out [OkHttp3Client in Volley and Retrofit](https://www.google.com)  
 
-
+#### Whitelist Hosts
 Optionaly, you may add @Observe annotation to the same activity class (launcher Activity) where Fn.init() function was called.  
 If launcher activity is annotated with @Observe, then only API calls to hosts listed in @Observe will be monitored.
 
@@ -245,6 +268,8 @@ public String getUserNameFromDb(String userId){
     return userName;
 }
 ```
+##### Returns NULL
+##### Exception in function
 Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.  
 An issue will be raised if an exception is raised inside a function that is being monitored by Fi.notes.
 
@@ -304,7 +329,7 @@ public class DBUtils {
 }
 ```
 
-### Static Function calls
+#### Static Function calls
 
 For static functions, pass corresponding .class instead of object in Fn.call() to invoke static method.
 
@@ -390,7 +415,7 @@ public class LoginActivity extends ObservableAppCompatActivity {
             new LoginAPI().call(fbToken, fbUserId);
             return true;
         }else{
-            //Toast to user "Publish permission is required"
+            //Toast: "Publish permission is required"
             return false;
         }
     }
@@ -408,12 +433,64 @@ public class LoginActivity extends ObservableAppCompatActivity {
 }
 ```
 
-Here, incase the facebook Login is failed or is delayed by more than 10000 milliseconds, corresponding issues will be raised.
-Also, after facebook login, if the Login API call is not returned or is delayed by more than 5000 milliseconds then, corresponding issues will be raised.
-In case of function chaining you need to use 'expectedChainedExecutionTime' and not 'expectedExecutionTime' to specify the expected time required for chained function to be called.
+Here, incase the facebook Login is failed or is delayed by more than 10000 milliseconds, corresponding issues will be raised.  
+Also, after facebook login, if the Login API call is not returned or is delayed by more than 5000 milliseconds then, corresponding issues will be raised.  
+In case of function chaining you need to use 'expectedChainedExecutionTime' and not 'expectedExecutionTime' to specify the expected time required for chained function to be called.  
+
+##### boolean returns false
+Here in 'makeLoginApiCall' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
 
 
+### Catch Global Exceptions.
+In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
+```Java
+@Override
+protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
+    Fn.init(this);
+    Fn.catchUnCaughtExceptions();
+}
+
+```
+
+### Custom Exceptions
+You can report custom exceptions using the Fn.exception() API.
+```Java
+try {
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("key","value");
+} catch (JSONException exception) {
+    Fn.exception(this, exception);
+}
+```
+
+### Custom Issue
+You can report custom issues using the Fn.issue() API.
+```Java
+private void paymentCompleted(String userIdentifier, int type){
+    //Handle post payment.
+}
+
+private void paymentFailed(String userIdentifier, String reason){
+    Fn.issue(this, "payment failed for "+reason);
+    //Handle payment failure.
+}
+```
+
+### Listen for Issue
+You can listen for and access every issue in realtime using the Fn.listenForIssue() API.
+```
+Fn.listenForIssue(new IssueFoundListener() {
+    @Override
+    public void issueFound(IssueView issue) {
+       ….
+	  ….
+	  ….	
+    }
+});
+```
 
 
 
