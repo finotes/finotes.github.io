@@ -417,11 +417,12 @@ public class LoginActivity extends ObservableAppCompatActivity {
                 nextFunctionClass = LoginActivity.class, 
                 expectedChainedExecutionTime = 10000)
     public void onFbLoginClicked() {
-        facebookLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
+        fnLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
             @Override
             public void onLoginComplete(LoginResult loginResult) {
-                Fn.call("makeLoginApiCall", LoginActivity.this, loginResult.getToken(), loginResult.getUserId(),
-                                                                AccessToken.getCurrentAccessToken().getPermissions());
+                Fn.call("makeLoginApiCall", LoginActivity.this, 
+				loginResult.getToken(), loginResult.getUserId(),
+				AccessToken.getCurrentAccessToken().getPermissions());
             }
 
             @Override
