@@ -227,6 +227,9 @@ You need to tag the function that needs to be monitored using @Observe annotatio
 This will allow Fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
 You can control all the above said parameters in @Observe annotation.
+
+##### expectedExecutionTime
+
 ```Java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -336,6 +339,10 @@ Lets consider Facebook LOGIN process in an application.
 
 When user clicks on the facebook login button the login workflow will take the user to a custom facebook screen where the user authenticates and comes back with a list of permissions that the user has approved, then a login API call is initiated to the app backend and the result could be success or failure.
 
+##### nextFunctionId
+##### nextFunctionClass
+##### expectedChainedExecutionTime
+
 ```Java
 public class LoginActivity extends ObservableAppCompatActivity {
     @Override
@@ -347,19 +354,23 @@ public class LoginActivity extends ObservableAppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Inside a click listener or an interface function you need to specify the class object
-                // as in this case LoginActivity.this and 'this' would not work.
+                // as in this case LoginActivity.this and simply passing 'this' would not work.
                 Fn.call("onFbLoginClicked", LoginActivity.this);
             }
         });
     }
-
-    @Observe(nextFunctionId = "makeLoginApiCall" , expectedChainedExecutionTime = 10000)
+    
+    // Here @Observe makes sure that 'makeLoginApiCall' function needs to be called within '10000' milliseconds.
+    @Observe(nextFunctionId = "makeLoginApiCall",  
+                nextFunctionClass = LoginActivity.class, 
+                expectedChainedExecutionTime = 10000)
     public void onFbLoginClicked() {
         //Start the fb login process.
         facebookLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
             @Override
             public void onLoginComplete(LoginResult loginResult) {
-                Fn.call("makeLoginApiCall", LoginActivity.this, loginResult.getToken(), loginResult.getUserId());
+                Fn.call("makeLoginApiCall", LoginActivity.this, loginResult.getToken(), loginResult.getUserId(),
+                                                                AccessToken.getCurrentAccessToken().getPermissions());
             }
 
             @Override
@@ -369,9 +380,17 @@ public class LoginActivity extends ObservableAppCompatActivity {
         });
     }
     
-    @Observe(nextFunctionId = "processUserLogin", expectedChainedExecutionTime = 5000)
-    public void makeLoginApiCall(String fbToken, String fbUserId){
-        new LoginAPI().call(fbToken, fbUserId);
+    // Here @Observe makes sure that 'processUserLogin' function needs to be called within '5000' milliseconds.
+    @Observe(nextFunctionId = "processUserLogin"
+                nextFunctionClass = LoginActivity.class, 
+                expectedChainedExecutionTime = 5000)
+    public void makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet){
+        if (permissionSet.contains("publish_actions")){
+            //On login API success 'onApiCompleted' function will be called.
+            new LoginAPI().call(fbToken, fbUserId);
+        }else{
+            //Toast to user "Publish permission is required"
+        }
     }
     
     @Override
@@ -387,9 +406,9 @@ public class LoginActivity extends ObservableAppCompatActivity {
 }
 ```
 
-
-
-
+Here, incase the facebook Login is failed or is delayed by more than 10000 milliseconds, corresponding issues will be raised.
+Also, after facebook login, if the Login API call is not returned or is delayed by more than 5000 milliseconds then, corresponding issues will be raised.
+In case of function chaining you need to use 'expectedChainedExecutionTime' and not 'expectedExecutionTime' to specify the expected time required for chained function to be called.
 
 
 
