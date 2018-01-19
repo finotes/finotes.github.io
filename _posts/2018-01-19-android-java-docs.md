@@ -312,9 +312,11 @@ protected void onCreate(Bundle savedInstanceState) {
     // This will trigger the getUserNameFromDb(String userId) function.    
     String userName = (String) Fn.call(“getUserNameFromDb", this, "123-sd-12");
 
-    // Here the id "getUserNameFromDBWithEmailAndToken" specified in @Observe annotation is passed in Fn.call().
+    // Here the id "getUserNameFromDBWithEmailAndToken" specified in 
+    // @Observe annotation is passed in Fn.call().
     // This will trigger the getUserNameFromDb(String email, String token) function.    
-    String userName = (String) Fn.call(“getUserNameFromDBWithEmailAndToken", this, "email", "RENKDS123S");
+    String userName = (String) Fn.call(“getUserNameFromDBWithEmailAndToken", 
+						this, "email", "RENKDS123S");
 }
 
 @Observe(expectedExecutionTime = 1400)
