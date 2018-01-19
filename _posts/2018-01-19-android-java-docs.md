@@ -300,7 +300,32 @@ public class DBUtils {
 }
 ```
 
+### Static Function calls
 
+For static functions, pass corresponding .class instead of object in Fn.call() to invoke static method.
+
+```Java
+public void onHttpCallCompleted(JSONObject httpResponseJSONObject) {
+    
+    long userTimestamp = (long) Fn.call(“getUserTimestampFromJSON", DBUtils.class, httpResponseJSONObject);
+
+}
+
+public class DBUtils {
+
+    @Observe(expectedExecutionTime = 2000)
+    public static long getUserTimestampFromJSON(JSONObject response){
+        long userTimestamp = processJSONAndFindUserTimestamp(response);
+        return userTimestamp;
+    }
+
+    @Observe(expectedExecutionTime = 1400)
+    public String getUserNameFromDb(String userId){
+        String userName = User.findById(userId).getName();
+        return userName;
+    }
+}
+```
 
 
 
