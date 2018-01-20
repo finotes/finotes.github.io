@@ -3,7 +3,7 @@ layout: post
 title: "Android SDK Documentation"
 ---
 
-## Pre requisites [errorlog](#errorlog)
+## Pre requisites
 
 Fi.notes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
 above.
