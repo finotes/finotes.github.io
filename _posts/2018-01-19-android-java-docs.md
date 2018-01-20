@@ -434,7 +434,7 @@ public class LoginActivity extends ObservableAppCompatActivity {
         });
     }
     
-    // Here function 'processUserLogin' is expeected to be called in under '5000' milliseconds.
+    // Here function 'processUserLogin' is expected to be called in under '5000' milliseconds.
     @Observe(nextFunctionId = "processUserLogin"
                 nextFunctionClass = LoginActivity.class, 
                 expectedChainedExecutionTime = 5000)
