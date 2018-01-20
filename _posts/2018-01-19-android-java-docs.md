@@ -5,7 +5,7 @@ title: "Android SDK Documentation"
 
 ## Pre requisites
 
-Fi.notes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
+fi.notes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
 above.
 
 ## Integration
@@ -71,7 +71,7 @@ protected void onCreate(Bundle savedInstanceState){
 }
 ```
 #### VerboseLog
-There are two variations of logging available in Fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
+There are two variations of logging available in fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
 Activating verbose will print all logs in LogCat including error and warning logs.
 ```java
 @Override
@@ -99,7 +99,7 @@ protected void onCreate(Bundle savedInstanceState){
 
 ### Report Network Call Failure
 
-You need to use the custom OkHttp3Client() provided by Fi.notes in your network calls.
+You need to use the custom OkHttp3Client() provided by fi.notes in your network calls.
 
 
 ```java
@@ -110,7 +110,7 @@ You need to use the custom OkHttp3Client() provided by Fi.notes in your network 
     client = new OkHttp3Client(new OkHttpClient.Builder()).build();
 ```
 
-Issues like status code errors, timeout issues, exceptions and other failures will be reported for all network calls using custom OkHttp3Client() provided by Fi.notes, from your application .
+Issues like status code errors, timeout issues, exceptions and other failures will be reported for all network calls using custom OkHttp3Client() provided by fi.notes, from your application .
 
 ##### Volley
 In order to add OkHttp3Client to Volley, set the client to OkHttpStack().
@@ -272,7 +272,7 @@ public String getUserNameFromDb(String userId){
 ```
 You need to tag the function using @Observe annotation and the function should to be 'public'.
 
-This will allow Fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
+This will allow fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
 You can control all the above said parameters in @Observe annotation.
 
