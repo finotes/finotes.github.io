@@ -236,7 +236,7 @@ public class BlogApplication extends ObservableApplication {
 }
 ```
 ### Function call
-You can raise return value issues, exceptions and execution delays in functions using Fn.call() and @Observe annotation.  
+fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call() and @Observe annotation.  
 A regular function call will be,
 
 ```java
