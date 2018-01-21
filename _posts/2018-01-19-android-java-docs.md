@@ -120,7 +120,19 @@ Also, do refer to the logs in LogCat, it will list any errors/warnings that migh
 
 If the error still persists, 
 do contact us at [fi.notes contact](mailto:support@finotes.com)
+You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.
 
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    Fn.init(this, false , true);
+//  Fn.issue(this, "Test Issue", Severity.MINOR);
+
+}
+```
 ## Reporting Issues
 
 ### Report Network Call Failure
