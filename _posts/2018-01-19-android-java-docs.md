@@ -106,6 +106,8 @@ protected void onCreate(Bundle savedInstanceState){
     setContentView(R.layout.activity_main);
 
     Fn.init(this, false , true);
+    //Fn.issue allows you to raise custom issues.
+    //Refer Custom Issue section by the end of this documentation for more details.
     Fn.issue(this, "Test Issue", Severity.MINOR);
 
 }
@@ -116,7 +118,7 @@ The issue that we raised should be reported.
 In-case the issue is not listed, make sure the right app is selected at the top of the dashboard.  
 Also, do refer to the logs in LogCat, it will list any errors/warnings that might have occured during the integration.  
 
-If still the issue persists, 
+If the error still persists, 
 do contact us at [fi.notes contact](mailto:support@finotes.com)
 
 ## Reporting Issues
