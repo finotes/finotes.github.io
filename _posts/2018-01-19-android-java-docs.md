@@ -400,7 +400,8 @@ For static functions, pass corresponding .class instead of object in Fn.call() t
 ```java
 public void onHttpCallCompleted(JSONObject httpResponseJSONObject) {
     
-    long userTimestamp = (long) Fn.call("getUserTimestampFromJSON", DBUtils.class, httpResponseJSONObject);
+    long userTimestamp = (long) Fn.call("getUserTimestampFromJSON", DBUtils.class,
+    							httpResponseJSONObject);
 
 }
 
@@ -442,7 +443,8 @@ public class LoginActivity extends ObservableAppCompatActivity {
         fbLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Inside a click listener or an interface function you need to specify the class object
+                //Inside a click listener or an interface function 
+		//you need to specify the class object
                 // as in this case LoginActivity.this and simply passing 'this' would not work.
                 Fn.call("onFbLoginClicked", LoginActivity.this);
             }
