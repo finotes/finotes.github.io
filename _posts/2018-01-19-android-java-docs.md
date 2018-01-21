@@ -94,6 +94,25 @@ protected void onCreate(Bundle savedInstanceState){
     Fn.logError(true);
 }
 ```
+## Test
+Now that the basic integration of fi.notes SDK is complete,
+Lets make sure that the dashboard and SDK are in sync. 
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    Fn.init(this, false , true);
+    Fn.issue(this, "Test Issue", Severity.MINOR);
+
+}
+```
+Now run the application in a simulator or real android device (with network connection).  
+Once the application opens up, go to [fi.notes dash](cloud.finotes.com/FinotesRS/#/tickets).  
+The custom reported issue should be listed there. 
+In-case the issue is not listed, make sure the right app is selected at the top of the dashboard.
+Also, do refer to the logs in LogCat, it will list any errors/warnings that might have occured during the integration.
 
 ## Reporting Issues
 
