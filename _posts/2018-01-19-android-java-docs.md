@@ -30,7 +30,7 @@ allprojects {
 
 Then in app level build.gradle
 ```gradle
-compile('com.finotes:finotescore:1.0@aar') {
+compile('com.finotes:finotescore:2.0@aar') {
     transitive = true;
 }
 ```
