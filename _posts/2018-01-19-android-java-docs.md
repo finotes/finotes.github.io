@@ -3,7 +3,7 @@ layout: post
 title: "Android SDK Documentation"
 ---
 
-# Current Version: 2.0
+# Version: 2.0
 
 ## Pre requisites
 
