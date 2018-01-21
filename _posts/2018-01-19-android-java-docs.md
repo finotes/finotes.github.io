@@ -480,7 +480,7 @@ You can connect multiple functions using ‘nextFunctionId’ and 'nextFunctionC
          return true;
     }
 ```
-Here 'makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet)' should to be called within 10000 milliseconds after execution of 'onFbLoginClicked()'.  
+Here 'makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet)' should be called within 10000 milliseconds after execution of 'onFbLoginClicked()'.  
 If the function 'makeLoginApiCall' is not called or is delayed then corresponding issues will be raised and reported.
 
 
