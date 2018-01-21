@@ -452,7 +452,39 @@ public class DBUtils {
 ### Chained Function calls
 
 You can connect multiple functions using ‘nextFunctionId’ and 'nextFunctionClass' properties in @Observe annotation.
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        
+	Fn.call("onFbLoginClicked", this);
+    }
+    
+    // Here function 'makeLoginApiCall' is expected to be called in under '10000' milliseconds.
+    @Observe(nextFunctionId = "makeLoginApiCall",  
+                nextFunctionClass = LoginActivity.class, 
+                expectedChainedExecutionTime = 10000)
+    public void onFbLoginClicked() {
+        fnLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
+            @Override
+            public void onLoginComplete(LoginResult loginResult) {
+                Fn.call("makeLoginApiCall", LoginActivity.this, 
+				loginResult.getToken(), loginResult.getUserId(),
+				AccessToken.getCurrentAccessToken().getPermissions());
+            }
+        });
+    }
+    
+    public boolean makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet){
+         return true;
+    }
+```
+Here 'makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet)' should to be called within 10000 milliseconds after execution of 'onFbLoginClicked()'.  
+If the function 'makeLoginApiCall' is not called or is delayed then corresponding issues will be raised and reported.
 
+
+#### Use Case for Function Chaining.
 Lets consider Facebook LOGIN process in an application.
 
 When user clicks on the facebook login button the login workflow will take the user to a custom facebook screen where the user authenticates and comes back with a list of permissions that the user has approved, then a login API call is initiated to the app backend and the result could be success or failure.
