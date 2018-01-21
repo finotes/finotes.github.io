@@ -111,7 +111,7 @@ protected void onCreate(Bundle savedInstanceState){
 }
 ```
 Now run the application in a simulator or real android device (with network connection).  
-Once the application opens up, go to [fi.notes dash](cloud.finotes.com/FinotesRS/#/tickets).  
+Once the application opens up, go to [fi.notes dash](https://cloud.finotes.com/FinotesRS/#/tickets).  
 The custom reported issue should be listed there. 
 In-case the issue is not listed, make sure the right app is selected at the top of the dashboard.
 Also, do refer to the logs in LogCat, it will list any errors/warnings that might have occured during the integration.
