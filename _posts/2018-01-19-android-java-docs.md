@@ -353,7 +353,7 @@ protected void onCreate(Bundle savedInstanceState) {
     // @Observe annotation is passed in Fn.call().
     // This will trigger the getUserNameFromDb(String email, String token) function.    
     String userName = (String) Fn.call("getUserNameFromDBWithEmailAndToken", 
-						this, "email", "RENKDS123S");
+						this, "support@finotes.com", "RENKDS123S");
 }
 
 @Observe(expectedExecutionTime = 1400)
@@ -368,6 +368,34 @@ public String getUserNameFromDb(String email, String token){
     return userName;
 }
 ```
+
+##### ID
+If a custom id is specified in @Observe annotation, then while calling that function, you need mandatorily to pass the id and not the function name.  
+If no custom id is specified in @Observe annoatation, then you can pass the function name itself as the id.
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+
+//  Function name itself is provided as function getUserNameFromDb(String userId) 
+//	doesnt have any explicit id in its @Observe annotation
+    Fn.call("getUserNameFromDb", this, "123-sd-12");
+
+//  ID 'getUserNameFromDBWithEmailAndToken' is provided as function 
+//      getUserNameFromDb(String email, String token) 
+//	does have an explicit id in its @Observe annotation
+    Fn.call("getUserNameFromDBWithEmailAndToken", 
+						this, "support@finotes.com", "RENKDS123S");
+}
+
+@Observe
+public String getUserNameFromDb(String userId){
+}
+
+@Observe(id = "getUserNameFromDBWithEmailAndToken")
+public String getUserNameFromDb(String email, String token){
+}
+```
+
 
 #### Function in Separate Class file
 
