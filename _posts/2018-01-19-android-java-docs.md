@@ -121,7 +121,7 @@ Also, do refer to the logs in LogCat, it will list any errors/warnings that migh
 
 If the error still persists, do contact us at [fi.notes contact email](mailto:support@finotes.com) or you may use the chat support at the bottom right corner.
 
-#### You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.
+<span style="color:blue">*You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.*</span>
 
 ```java
 @Override
