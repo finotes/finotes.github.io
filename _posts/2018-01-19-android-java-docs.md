@@ -3,7 +3,7 @@ layout: post
 title: "Android SDK Documentation"
 ---
 
-# Android SDK Version: 2.0.1
+# Android SDK Version: 2.0.2
 
 ## Pre requisites
 
@@ -33,7 +33,7 @@ You will be able to get AWS_ACCESS_KEY, AWS_SECRET_KEY from 'Apps' section in fi
 
 Then in app level build.gradle
 ```gradle
-compile('com.finotes:finotescore:2.0.1@aar') {
+compile('com.finotes:finotescore:2.0.2@aar') {
     transitive = true;
 }
 ```
