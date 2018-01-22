@@ -120,7 +120,8 @@ In-case the issue is not listed, make sure the right app is selected at the top 
 Also, do refer to the logs in LogCat, it will list any errors/warnings that might have occured during the integration.  
 
 If the error still persists, do contact us at [fi.notes contact email](mailto:support@finotes.com) or you may use the chat support at the bottom right corner.
-###### You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.
+
+#### You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.
 
 ```java
 @Override
