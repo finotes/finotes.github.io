@@ -114,13 +114,13 @@ protected void onCreate(Bundle savedInstanceState){
 }
 ```
 Now run the application in a simulator or real android device (with network connection).  
-Once the application opens up, open [fi.notes dash](https://cloud.finotes.com/FinotesRS/#/tickets).    
+Once the application opens up, open [fi.notes dash](https://app.finotes.com/FinotesRS/#/tickets).    
 The issue that we raised should be reported.   
 In-case the issue is not listed, make sure the right app is selected at the top of the dashboard.  
 Also, do refer to the logs in LogCat, it will list any errors/warnings that might have occured during the integration.  
 
 If the error still persists, do contact us at [fi.notes contact email](mailto:support@finotes.com) or you may use the chat support at the bottom right corner.
-You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.
+###### You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.
 
 ```java
 @Override
