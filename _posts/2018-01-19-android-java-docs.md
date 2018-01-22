@@ -20,7 +20,7 @@ allprojects {
     repositories {
         jcenter()
         maven {
-            url "s3://finotes-core/releases"
+            url "s3://finotescore-android/release"
             credentials(AwsCredentials) {
                 accessKey = <AWS_ACCESS_KEY>
                 secretKey = <AWS_SECRET_KEY>
