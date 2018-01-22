@@ -29,7 +29,7 @@ allprojects {
    }
 }
 ```
-You will be able to get <AWS_ACCESS_KEY>, <AWS_SECRET_KEY> from 'Apps' section in fi.notes. dashboard.
+You will be able to get AWS_ACCESS_KEY, AWS_SECRET_KEY from 'Apps' section in fi.notes. dashboard.
 
 Then in app level build.gradle
 ```gradle
