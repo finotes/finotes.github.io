@@ -204,6 +204,9 @@ Optionally, You may provide a custom timeout for hostnames. This will raise an I
 ied hosts, that takes more than the specified time for completion.  
 Do note that specifying timeout will not interfere in any way with your network calls.
 
+#### Categorize Tickets
+
+You will be able to categorize Issues into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with different "X-URLID" will be categorized into separate tickets.  
 
 ### Activity/Fragment trail
 
