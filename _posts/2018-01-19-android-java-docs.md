@@ -33,7 +33,7 @@ You will be able to get AWS_ACCESS_KEY, AWS_SECRET_KEY from 'Apps' section in fi
 
 Then in app level build.gradle
 ```gradle
-compile('com.finotes:finotescore:2.0.2@aar') {
+compile('com.finotes:finotescore:2.1.0@aar') {
     transitive = true;
 }
 ```
@@ -204,9 +204,18 @@ Optionally, You may provide a custom timeout for hostnames. This will raise an I
 ied hosts, that takes more than the specified time for completion.  
 Do note that specifying timeout will not interfere in any way with your network calls.
 
-#### Categorize Tickets
+#### Categorize Tickets (Optional)
 
-You will be able to categorize Issues into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with different "X-URLID" will be categorized into separate tickets.  
+You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
+```
+	@Headers("X-URLID: loginapi")
+```
+or
+```
+	.addHeader("X-URLID","registrationapi")
+```
+Any issue in API calls with same X-URLID will be shown as a single ticket in fi.notes dashboard.
+
 
 ### Activity/Fragment trail
 
