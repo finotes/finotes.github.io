@@ -208,11 +208,11 @@ Do note that specifying timeout will not interfere in any way with your network 
 
 You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
 ```
-	@Headers("X-URLID: loginapi")
+       @Headers("X-URLID: loginapi")
 ```
 or
 ```
-	.addHeader("X-URLID","registrationapi")
+       .addHeader("X-URLID","registrationapi")
 ```
 Any issue in API calls with same X-URLID will be shown as a single ticket in fi.notes dashboard.
 
