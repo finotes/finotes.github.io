@@ -465,122 +465,48 @@ public class DBUtils {
 
 ### Chained Function calls
 
-You can connect multiple functions using ‘nextFunctionId’ and 'nextFunctionClass' properties in @Observe annotation.
+You can connect multiple functions using 'nextFunctionId' and 'nextFunctionClass' properties in @Observe annotation.
 ```java
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
-	Fn.call("onFbLoginClicked", this);
-    }
-    
-    // Here function 'makeLoginApiCall' is expected to be called in under '10000' milliseconds.
-    @Observe(nextFunctionId = "makeLoginApiCall",  
-                nextFunctionClass = LoginActivity.class, 
-                expectedChainedExecutionTime = 10000)
-    public void onFbLoginClicked() {
-        fnLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
+
+
+	sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onLoginComplete(LoginResult loginResult) {
-                Fn.call("makeLoginApiCall", LoginActivity.this, 
-				loginResult.getToken(), loginResult.getUserId(),
-				AccessToken.getCurrentAccessToken().getPermissions());
+            public void onClick(View v) {
+		Fn.call("sendChat", this, chatBox.getText().toString());
             }
         });
+
     }
     
-    public boolean makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet){
-         return true;
+    // Here function 'onChatSent' is expected to be called in under '2000' milliseconds.
+    @Observe(nextFunctionId = "onChatSent",
+            nextFunctionClass = MainActivity.class)
+    public boolean sendChat(String message){
+	if(isValid(message)){
+	     syncMessage(message);
+	     return true;
+	}
+	return false;
+    }
+    
+    @Observe
+    public void onChatSent(String chatMessageId){
+	chatSyncConfirmed(chatMessageId)
     }
 ```
-Here 'makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet)' should be called within 10000 milliseconds after execution of 'onFbLoginClicked()'.  
-If the function 'makeLoginApiCall' is not called or is delayed then corresponding issues will be raised and reported.
-
-
-#### Use Case for Function Chaining.
-Lets consider Facebook LOGIN process in an application.
-
-When user clicks on the facebook login button the login workflow will take the user to a custom facebook screen where the user authenticates and comes back with a list of permissions that the user has approved, then a login API call is initiated to the app backend and the result could be success or failure.
+Here 'onChatSent(String chatMessageId)' should be called within 2000 milliseconds after execution of 'sendChat(String message)'.  
+If the function 'onChatSent' is not called or is delayed then corresponding issues will be raised and reported.
 
 ##### nextFunctionId
 ##### nextFunctionClass
 ##### expectedChainedExecutionTime
 
-```java
-public class LoginActivity extends ObservableAppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        
-        fbLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Inside a click listener or an interface function 
-		//you need to specify the class object
-                // as in this case LoginActivity.this and simply passing 'this' would not work.
-                Fn.call("onFbLoginClicked", LoginActivity.this);
-            }
-        });
-    }
-    
-    // Here function 'makeLoginApiCall' is expected to be called in under '10000' milliseconds.
-    @Observe(nextFunctionId = "makeLoginApiCall",  
-                nextFunctionClass = LoginActivity.class, 
-                expectedChainedExecutionTime = 10000)
-    public void onFbLoginClicked() {
-        fnLogin.initateFbLogin(LoginActivity.this, null, callbackManager, new FbLoginListener() {
-            @Override
-            public void onLoginComplete(LoginResult loginResult) {
-                Fn.call("makeLoginApiCall", LoginActivity.this, 
-				loginResult.getToken(), loginResult.getUserId(),
-				AccessToken.getCurrentAccessToken().getPermissions());
-            }
-
-            @Override
-            public void onLoginFailed() {
-	    	// You can report custom issue using Fn.issue().
-	    	// Check custom issue section for more details
-	        Fn.issue(this, "Facebook login failed");
-            }
-        });
-    }
-    
-    // Here function 'processUserLogin' is expected to be called in under '5000' milliseconds.
-    @Observe(nextFunctionId = "processUserLogin"
-                nextFunctionClass = LoginActivity.class, 
-                expectedChainedExecutionTime = 5000)
-    public boolean makeLoginApiCall(String fbToken, String fbUserId, Set<String> permisisonSet){
-        if (permissionSet.contains("publish_actions")){
-            //On login API success 'onApiCompleted' function will be called.
-            new LoginAPI().call(fbToken, fbUserId);
-            return true;
-        }else{
-            //Toast: "Publish permission is required"
-            return false;
-        }
-    }
-    
-    @Override
-    public void onApiCompleted(JSONObject response) {
-        Fn.call("processUserLogin", LoginActivity.this, response);
-    }
-    
-    public void processUserLogin(JSONObject response) {
-        if(response.isSuccess()){
-            //Move to MainActivity
-        }
-    }
-}
-```
-
-Here, incase the facebook Login is failed or is delayed by more than 10000 milliseconds, corresponding issues will be raised.  
-Also, after facebook login, if the Login API call is not returned or is delayed by more than 5000 milliseconds then, corresponding issues will be raised.  
-In case of function chaining you need to use 'expectedChainedExecutionTime' and not 'expectedExecutionTime' to specify the expected time required for chained function to be called.  
-
 ##### boolean returns false
-Here in 'makeLoginApiCall' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
+Here in 'sendChat' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
 
 
 #### Test
