@@ -541,10 +541,12 @@ try {
 ### Custom Issue
 You can report custom issues using the Fn.issue() API.
 ```java
+@Override
 private void paymentCompleted(String userIdentifier, int type){
     //Handle post payment.
 }
 
+@Override
 private void paymentFailed(String userIdentifier, String reason){
     Fn.issue(this, "payment failed for "+reason);
     //Handle payment failure.
