@@ -147,7 +147,7 @@ Fn.listenForIssue(new IssueFoundListener() {
     }
 });
 ```
-You will be provided with an IsseuView object that contains all the issue properties that are being synced to the server, making the whole process transparent. 
+You will be provided with an Issue object that contains all the issue properties that are being synced to the server, making the whole process transparent.    
 As this callback will be made right after an issue occurrence, you will be able to provide a positive message to the user.
 
 
