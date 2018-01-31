@@ -134,6 +134,23 @@ protected void onCreate(Bundle savedInstanceState){
 
 }
 ```
+
+### Listen for Issue
+You can listen for and access every issue in realtime using the Fn.listenForIssue() API.
+```java
+Fn.listenForIssue(new IssueFoundListener() {
+    @Override
+    public void issueFound(IssueView issue) {
+	  ….
+	  ….
+	  ….	
+    }
+});
+```
+You will be provided with an IsseuView object that contains all the issue properties that are being synced to the server, making the whole process transparent. 
+As this callback will be made right after an issue occurrence, you will be able to provide a positive message to the user.
+
+
 ## Reporting Issues
 
 ### Report Network Call Failure
@@ -553,18 +570,6 @@ private void paymentFailed(String userIdentifier, String reason){
 }
 ```
 
-### Listen for Issue
-You can listen for and access every issue in realtime using the Fn.listenForIssue() API.
-```java
-Fn.listenForIssue(new IssueFoundListener() {
-    @Override
-    public void issueFound(IssueView issue) {
-	  ….
-	  ….
-	  ….	
-    }
-});
-```
 
 
 
