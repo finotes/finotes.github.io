@@ -114,9 +114,9 @@ You can listen for and access every issue in realtime using the Fn.listenForIssu
         return true
     }
 
-@objc func issueReported(_ issue:Issue){
+    @objc func issueReported(_ issue:Issue){
 
-}
+    }
 ```
 You will be provided with an Issue object that contains issue properties that are being synced to the server, making the whole process transparent.  
 As this callback will be made right after an issue occurrence, you will be able to provide a positive message to the user depending on the severity of the issue.
