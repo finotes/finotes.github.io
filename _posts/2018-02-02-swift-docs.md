@@ -139,9 +139,15 @@ If you are using URLSession with shared.dataTask then issues in all REST api cal
 Incase you are using Alamofire, then you need to add the below code in your NSURLSessionConfiguration.
 The part we are interested is 
 ```objc
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration 
-    						defaultSessionConfiguration];
-    configuration.protocolClasses = [Fn getProtocols:[configuration.protocolClasses mutableCopy] ];
+        let todoEndpoint: String = "https://hostname.com/path/to/resource"
+        let configuration = URLSessionConfiguration.default
+        
+        configuration.protocolClasses = Fn.getProtocols(configuration.protocolClasses)
+	
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        manager.request(todoEndpoint, method: .get)
+            .responseJSON { response in
+        }
 ```
 
 #### Whitelist Hosts
