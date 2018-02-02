@@ -137,6 +137,7 @@ protected void onCreate(Bundle savedInstanceState){
 
 ### Listen for Issue
 You can listen for and access every issue in realtime using the Fn.listenForIssue() API.
+You need to add the listener in your Application class.
 ```java
 Fn.listenForIssue(new IssueFoundListener() {
     @Override
