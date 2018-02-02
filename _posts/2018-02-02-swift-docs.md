@@ -251,7 +251,8 @@ You need to add @objc annoation before function definition.
 ```swift
 import FinotesCoreSwift
 
-    Fn.call(withSelector: #selector(getUserNameFromDb(_:)), withTarget: self, withParameters:"123-sd-12")
+    Fn.call(withSelector: #selector(getUserNameFromDb(_:)), withTarget: self, 
+    							withParameters:"123-sd-12")
 }
 
 @objc func getUserNameFromDb(_ userId:String) -> String?{
@@ -270,7 +271,8 @@ import FinotesCoreSwift
 
     let observer : Observer = Fn.observe()
     observer.expectedExecutionTime(1400)
-    Fn.call(withSelector: #selector(getUserNameFromDb(_:)), withTarget: self, withObserver:observer, withParameters:"123-sd-12")
+    Fn.call(withSelector: #selector(getUserNameFromDb(_:)), withTarget: self, 
+    					withObserver:observer, withParameters:"123-sd-12")
 }
 
 @objc func getUserNameFromDb(_ userId:String) -> String?{
