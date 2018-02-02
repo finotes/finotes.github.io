@@ -169,8 +169,8 @@ Do note that specifying timeout will not interfere in any way with your network 
 #### Categorize Tickets (Optional)
 
 You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
-```objc
-    [nsMutableURLRequest setValue:@"loginapi" forHTTPHeaderField:@"X-URLID"];
+```swift
+    nsMutableURLRequest.setValue("loginapi", forHTTPHeaderField: "X-URLID")
 ```
 Any issue in API calls with same X-URLID will be shown as a single ticket in fi.notes dashboard.
 
@@ -178,16 +178,15 @@ Any issue in API calls with same X-URLID will be shown as a single ticket in fi.
 ### Controller trail
 When an issue is raised, inorder to get user screen flow for the current session, you need to extend your Controller from ObservableViewController.
 
-```objc
-@interface ViewController : UIViewController
+```swift
+class ViewController: UIViewController {
 
-@end
-
+}
 Changes to,
 
-@interface ViewController : ObservableViewController
+class ViewController: ObservableViewController {
 
-@end
+}
 ```
 
 ##### Low Memory Reporting 
@@ -195,44 +194,42 @@ Extending Controller from ObservableViewController will also allow fi.notes to r
 
 You may use App functions to report different app states along with Controller trail.
 
-```objc
-#import <FinotesCore/App.h>
+```swift
+import FinotesCoreSwift
 
-@interface AppDelegate ()
 
-@end
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
-@implementation AppDelegate
+    func applicationWillResignActive(_ application: UIApplication) {
+        App.applicationWillResignActive(application)
+    }
 
-	- (void)applicationWillResignActive:(UIApplication *)application {
-	    [App applicationWillResignActive:self];
-	}
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        App.applicationDidEnterBackground(application)
+    }
 
-	- (void)applicationDidEnterBackground:(UIApplication *)application {
-	    [App applicationDidEnterBackground:self];
-	}
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        App.applicationWillEnterForeground(application)
+    }
 
-	- (void)applicationWillEnterForeground:(UIApplication *)application {
-	    [App applicationWillEnterForeground:self];
-	}
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        App.applicationDidBecomeActive(application)
+    }
 
-	- (void)applicationDidBecomeActive:(UIApplication *)application {
-	    [App applicationDidBecomeActive:self];
-	}
+    func applicationWillTerminate(_ application: UIApplication) {
+        App.applicationWillTerminate(application)
+    }
 
-	- (void)applicationWillTerminate:(UIApplication *)application {
-	    [App applicationWillTerminate:self];
-	}
-@end
+}
 ```
 Once Controllers are extended from ObservableViewController and App functions are implemented, if an issue is raised, on fi.notes dashboard, you will be able to view screen activity for 3 minutes prior to the issue was raised. 
 ```
 Activity Trail
-	ControllerTrail:viewDidLoad                  09:21:53:923
-	ControllerTrail:viewWillAppear               09:21:53:923
-	ControllerTrail:viewDidAppear                09:21:53:927
+	LoginController:viewDidLoad                  09:21:53:923
+	LoginController:viewWillAppear               09:21:53:923
+	LoginController:viewDidAppear                09:21:53:927
 	UIApplication:applicationDidBecomeActive     09:21:54:081
-	ControllerTrail:viewDidLoad                  09:22:09:670
+	LoginController:viewDidLoad                  09:22:09:670
 ```
 
 ### Function call
