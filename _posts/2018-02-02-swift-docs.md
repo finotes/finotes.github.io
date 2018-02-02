@@ -233,31 +233,29 @@ Activity Trail
 ```
 
 ### Function call
-fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using [Fn call:].  
+fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call().  
 A regular function call will be,
 
-```objc
+```swift
 
-    [self getUserNameFromDb:@"123-sd-12"]
+    getUserNameFromDb("123-sd-12")
 }
 
--(NSString *) getUserNameFromDb:(NSString *) userId {
-    NSString *userName = [[User findById:userId] name];
-    return userName;
+func getUserNameFromDb(_ userId:String) -> String?{
+    return User.findById(userId).name
 }
+
 ```
-Function "[self getUserNameFromDb:]" call needs to be changed to,
-```objc
-#import <FinotesCore/Observer.h>
-#import <FinotesCore/Fn.h>
+Function "getUserNameFromDb()" call needs to be changed to,  
+You need to add @objc annoation before function definition.
+```swift
+import FinotesCoreSwift
 
-
-    [Fn call:@selector(getUserNameFromDb:) target:self withParameters:@"123-sd-12"];
+    Fn.call(withSelector: #selector(getUserNameFromDb(_:)), withTarget: self, withParameters:"123-sd-12")
 }
 
--(NSString *) getUserNameFromDb:(NSString *) userId {
-    NSString *userName = [[User findById:userId] name];
-    return userName;
+@objc func getUserNameFromDb(_ userId:String) -> String?{
+    return User.findById(userId).name
 }
 ```
 
@@ -267,59 +265,47 @@ You can control all the above said parameters in Observe object.
 
 ##### expectedExecutionTime
 
-```objc
-#import <FinotesCore/Observer.h>
-#import <FinotesCore/Fn.h>
+```swift
+import FinotesCoreSwift
 
-
-
-    Observer *observer =  [[Fn observe] expectedExecutionTime:1400];
-    NSString *userName = [Fn call:@selector(getUserNameFromDb:) target:self 
-    					observer:observer withParameters:@"123-sd-12"];
+    let observer : Observer = Fn.observe()
+    observer.expectedExecutionTime(1400)
+    Fn.call(withSelector: #selector(getUserNameFromDb(_:)), withTarget: self, withObserver:observer, withParameters:"123-sd-12")
 }
 
--(NSString *) getUserNameFromDb:(NSString *) userId {
-    NSString *userName = [[User findById:userId] name];
-    return userName;
+@objc func getUserNameFromDb(_ userId:String) -> String?{
+    return User.findById(userId).name
 }
+
 ```
 ##### Returns nil
 ##### Exception in function
-Here the expectedExecutionTime for the function "[self getUserNameFromDb:]" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is nil, then corresponding issues will be raised.  
-An issue will be raised when exception occurs inside a function that is called using [Fn call:].
+Here the expectedExecutionTime for the function "getUserNameFromDb()" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is nil, then corresponding issues will be raised.  
+An issue will be raised when exception occurs inside a function that is called using Fn.call().
 
 
 #### Function in Separate Class file
 
-If the function is defined in a separate file and needs to be invoked, then instead of passing "self" you can pass the corresponding object in [Fn call:]
-```objc
-#import <FinotesCore/Observer.h>
-#import <FinotesCore/Fn.h>
+If the function is defined in a separate file and needs to be invoked, then instead of passing "self" you can pass the corresponding object in Fn.call()
+```swift
+import FinotesCoreSwift
 
 
-    DBUtils *dbUtils = [[DBUtils alloc] init];
+    let dbUtils = DBUtils()
 
-    Observer *observer =  [[Fn observe] expectedExecutionTime:1400];
-    NSString *userName = [Fn call:@selector(getUserNameFromDb:) target:dbUtils 
-    					observer:observer withParameters:@"123-sd-12"];
+    let observer : Observer = Fn.observe()
+    observer.expectedExecutionTime(1400)
+    let resultValue:String? = Fn.call(withSelector: #selector(customObject.getUserNameFromDb(_:)), 
+    					 withTarget: customObject,
+                                         withObserver:observer ,
+                                         withParameters:"hello") as! String?
 }
 
-
-
-
-
-@interface DBUtils ()
-
-@end
-
-@implementation DBUtils
-
--(NSString *) getUserNameFromDb:(NSString *) userId {
-    NSString *userName = [[User findById:userId] name];
-    return userName;
+public class DBUtils: NSObject {
+    @objc public func getUserNameFromDb(_ userId:String) -> String?{
+        return User.findById(userId).name
+    }
 }
-
-@end
 ```
 
 #### Static Function calls
