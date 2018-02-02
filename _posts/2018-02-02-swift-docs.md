@@ -136,7 +136,7 @@ If you are using URLSession with shared.dataTask then issues in all REST api cal
 ```
 
 ##### Alamofire
-Incase you are using AFNetworking, then you need to add the below code in your NSURLSessionConfiguration.
+Incase you are using Alamofire, then you need to add the below code in your NSURLSessionConfiguration.
 The part we are interested is 
 ```objc
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration 
@@ -144,35 +144,10 @@ The part we are interested is
     configuration.protocolClasses = [Fn getProtocols:[configuration.protocolClasses mutableCopy] ];
 ```
 
-###### AFHTTPRequestOperationManager
-If you try to use 'AFHTTPRequestOperationManager', your app might crash.  
-'AFHTTPRequestOperationManager' is outdated in AFNetworking 3.x, we suggest you migrate to 'NSURLSessionConfiguration'.  
-You can find out, [how to migrate to 'NSURLSessionConfiguration' here](https://github.com/AFNetworking/AFNetworking/wiki/AFNetworking-3.0-Migration-Guide).
-
-
-Full code can be found here,
-
-```objc
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration 
-    						defaultSessionConfiguration];
-    configuration.protocolClasses = [Fn getProtocols:[configuration.protocolClasses mutableCopy] ];
-    AFHTTPSessionManager * myManager = [[AFHTTPSessionManager alloc] 
-    						initWithSessionConfiguration:configuration];
-    NSURL *URL = [NSURL URLWithString:@"https://app.finotes.com/login"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    NSURLSessionDataTask *dataTask = [myManager dataTaskWithRequest:request 
-    			completionHandler:^(NSURLResponse *response, 
-						id responseObject, NSError *error) {
-        if (!error) {
-        }
-    }];
-    [dataTask resume];
-```
-
 #### Whitelist Hosts
 Add ObservableDomains array to the project info.plist with the list of domains to be observed, if needed, you may provide a timeout for the api calls along with the host names separated by a coma.
 
-![Info.plist observable domains](/Screen%20Shot%202018-01-15%20at%209.12.54%20PM.png)
+![Info.plist observable domains](/Screen%20Shot%202018-02-02%20at%2011.06.25%20AM.png)
 
 Incase you are directly editing the info.plist as source-code
 
@@ -183,8 +158,8 @@ Incase you are directly editing the info.plist as source-code
 <dict>
 	<key>ObservableDomains</key>
 	<array>
-		<string>https://host.com,5000</string>
-		<string>http://another.host.com</string>
+		<string>host.com,5000</string>
+		<string>another.host.com</string>
 	</array>
 ```
 
