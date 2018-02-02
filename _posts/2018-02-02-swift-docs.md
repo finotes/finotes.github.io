@@ -312,11 +312,10 @@ public class DBUtils: NSObject {
 
 #### Static Function calls
 
-For static functions, pass corresponding class instead of object in [Fn call:] to invoke static method.
+For static functions, pass corresponding class instead of object in Fn.call() to invoke static method.
 
-```objc
-#import <FinotesCore/Observer.h>
-#import <FinotesCore/Fn.h>
+```swift
+import FinotesCoreSwift
 
 
         let userTimeStamp :CLongLong = Fn.call(withSelector: #selector(ViewController.getUserTimestampFromJSON),
@@ -330,81 +329,63 @@ For static functions, pass corresponding class instead of object in [Fn call:] t
 
 ### Chained Function calls
 
-You can connect multiple functions using ‘nextFunctionSignature’ and 'inClass' properties in Observe object.
+You can connect multiple functions using 'nextFunctionSignature' and 'inClass' properties in Observe object.
 
-```objc
-#import <FinotesCore/Observer.h>
-#import <FinotesCore/Fn.h>
+```swift
+import FinotesCoreSwift
 
+    @objc func sendChatClicked(sender: UITapGestureRecognizer) {
+    
+        let observer : Observer = Fn.observe()
+        observer.expectedChainedExecutionTime(2000)
+        observer.nextFunctionSignature(#selector(onChatSent(_:)), in: ViewController.classForCoder())
 
-   - (void) sendChatClicked:(UITapGestureRecognizer *)recognizer {
-
-       // Here function 'onChatSent:' is 
-       // expected to be called in under '2000' milliseconds.
-       Observer *observer =  [[[Fn observe] expectedChainedExecutionTime:2000]  
-				nextFunctionSignature:
-					@selector(onChatSent:) 
-				inClass:[self class]];
-       [Fn call:@selector(sendChat:) target:self observer:observer];
-   }
-
-   - (Boolean) sendChat:(NSString *) message {
-   	if([self isValid:message]){
-	     [self syncMessage:message];
+	Fn.call(withSelector: #selector(sendChat(_:)), withTarget: self, withObserver:observer, 
+								withParameters: chatMessage)
+    }
+    
+    @objc func sendChat(_ message:String) -> Bool {
+    	if(isValid(message)){
+	      return true
 	}
-	return false;
-   }
+        return false
+    }
 
-   - (void) onChatSent:(NSString *)chatMessageId {
-   	[self chatSyncConfirmed:chatMessageId];
-   }
+    @objc func onChatSent(_ chatId:String) {
+    	chatSyncConfirmed(chatId)
+    }
 ```
 
-Here 'onChatSent:' should be called within 2000 milliseconds after execution of 'sendChat:'. If the function 'onChatSent:' is not called or is delayed then corresponding issues will be raised and reported.
+Here 'onChatSent()' should be called within 2000 milliseconds after execution of 'sendChat()'. If the function 'onChatSent()' is not called or is delayed then corresponding issues will be raised and reported.
 
 ##### boolean returns false
-Here in 'sendChat:' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
+Here in 'sendChat()' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
 
 #### Test
 In-order to check if you have implemented function chaining correctly, set break points inside the chained functions then run application in your simulator or device, and use your application, if you have implemented correctly, You will hit these breakpoints correctly.
 
 ### Catch Global Exceptions.
-In-order to catch uncaught exceptions, You may use [Fn catchExceptions].
-```objc
-#import <FinotesCore/Fn.h>
+In-order to catch uncaught exceptions, You may use Fn.catchExceptions().
+```swift
+import FinotesCoreSwift
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    [Fn initialize:application];
-    [Fn catchExceptions];
-}
-```
-
-### Custom Exceptions
-You can report custom exceptions using the [Fn reportExceptionAt:] API.
-```objc
-@try{
-    [self fetchUserDetails];
-}@catch(NSException *exception){
-    [Fn reportExceptionAt:self withException:exception 
-    					withSeverity:FATAL];
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	Fn.initialize(application, withDryRun: false, withVerbose: true)
+        Fn.catchExceptions()
+        return true
 }
 ```
 
 ### Custom Issue
 You can report custom issues using the [Fn reportIssueAt:] API.
-```objc
-
+```swift
 //Payment gateway delegate methods.
--(void) paymentCompleted:(NSString *) userIdentifier forType:(NSInteger) type{
+func paymentCompleted(_ userIdentifier:String, _ type:String){
 
 }
 
--(void) paymentFailed:(NSString *) userIdentifier forReason:(NSString *) reason{
-    [Fn reportIssueAt:self withDescription:
-    			[NSString stringWithFormat:@"Payment failed for %@", reason] 
-			withSeverity:FATAL];
+func paymentFailed(_ reason:String, _ userId:String){
+	Fn.reportIssue(atTarget: self, withDescription: String(format: "Payment failed for %@",reason), withSeverity: FATAL)
 }
 ```
 
