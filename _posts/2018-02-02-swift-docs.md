@@ -377,7 +377,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ```
 
 ### Custom Issue
-You can report custom issues using the [Fn reportIssueAt:] API.
+You can report custom issues using the Fn.reportIssue() API.
 ```swift
 //Payment gateway delegate methods.
 func paymentCompleted(_ userIdentifier:String, _ type:String){
@@ -385,7 +385,8 @@ func paymentCompleted(_ userIdentifier:String, _ type:String){
 }
 
 func paymentFailed(_ reason:String, _ userId:String){
-	Fn.reportIssue(atTarget: self, withDescription: String(format: "Payment failed for %@",reason), withSeverity: FATAL)
+	Fn.reportIssue(atTarget: self, withDescription: String(format: "Payment failed for %@",reason)
+										, withSeverity: FATAL)
 }
 ```
 
