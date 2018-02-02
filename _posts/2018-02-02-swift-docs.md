@@ -297,7 +297,7 @@ import FinotesCoreSwift
 
     let observer : Observer = Fn.observe()
     observer.expectedExecutionTime(1400)
-    let resultValue:String? = Fn.call(withSelector: #selector(customObject.getUserNameFromDb(_:)), 
+    let userName :String? = Fn.call(withSelector: #selector(customObject.getUserNameFromDb(_:)), 
     					 withTarget: customObject,
                                          withObserver:observer ,
                                          withParameters:"hello") as! String?
@@ -319,34 +319,13 @@ For static functions, pass corresponding class instead of object in [Fn call:] t
 #import <FinotesCore/Fn.h>
 
 
-    Observer *observer =  [[Fn observe] expectedExecutionTime:2000];
-    long userTimestamp = [[Fn call:@selector(getUserTimestampFromJSON:) 
-    					target:[DBUtils class] observer:observer 
-					withParameters:httpResponse] longValue];
+        let userTimeStamp :CLongLong = Fn.call(withSelector: #selector(ViewController.getUserTimestampFromJSON),
+                withTarget: ViewController.classForCoder()) as! CLongLong
 }
 
-
-
-
-
-@interface DBUtils ()
-
-@end
-
-@implementation DBUtils
-
-+(long) getUserTimestampFromJSON:(NSDictionary *) response {
-    long userTimestamp = [self processJSONAndFindUserTimestamp:response];
-    return userTimestamp;
+@objc static func getUserTimestampFromJSON() -> CLongLong{
+	return processJsonResponse()
 }
-
-
--(NSString *) getUserNameFromDb:(NSString *) userId {
-    NSString *userName = [[User findById:userId] name];
-    return userName;
-}
-
-@end
 ```
 
 ### Chained Function calls
