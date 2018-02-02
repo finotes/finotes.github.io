@@ -106,6 +106,7 @@ import FinotesCoreSwift
 
 ### Listen for Issue
 You can listen for and access every issue in realtime using the Fn.listenForIssues() API.
+You need to add the listener in your AppDelegate file.
 ```swift
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
