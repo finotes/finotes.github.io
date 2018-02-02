@@ -127,12 +127,15 @@ As this callback will be made right after an issue occurrence, you will be able 
 
 Issues like status code errors, timeout issues and other failures will be reported for all network calls by fi.notes, from your application.  
 
-If you are using NSURLSession with sharedSession then issues in all REST api calls will be reported automatically.
-```objc
-	NSURLSession *session = [NSURLSession sharedSession];
+If you are using URLSession with shared.dataTask then issues in all REST api calls will be reported automatically.
+```swift
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+	    ...
+        }
+        task.resume()
 ```
 
-##### AFNetworking
+##### Alamofire
 Incase you are using AFNetworking, then you need to add the below code in your NSURLSessionConfiguration.
 The part we are interested is 
 ```objc
