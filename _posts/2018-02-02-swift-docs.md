@@ -238,6 +238,16 @@ Activity Trail
 	LoginController:viewDidLoad                  09:22:09:670
 ```
 
+### Custom Breadcrumbs
+
+You may add custom breadcrumbs to activity trail, which will be timestamped and shown in their execution order on fi.notes dashboard when an issue is raised.
+
+```swift
+        Fn.setBreadCrumb(atTarget: self, forCrumb: "completed login")
+	...
+        Fn.setBreadCrumb(atTarget: self, forCrumb: "sending a message")
+```
+
 ### Function call
 fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call().  
 A regular function call will be,
