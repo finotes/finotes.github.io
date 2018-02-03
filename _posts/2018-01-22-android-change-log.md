@@ -4,6 +4,9 @@
 
 ## Change Log
 
+### Version 2.2.0 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+> Added support for custom bread crumbs
+
 ### Version 2.1.0 [Click here to view docs](https://finotes.github.io/2018/01/19/android-java-docs)
 
 > Added ability to provide a custom identifier (512 bit string ID) and a readable string.   
@@ -12,4 +15,3 @@
 > Added token required to integrate SDK in "Apps" section in fi.notes. dashboard
 
 
-### Version 2.0.2 [Click here to view docs](https://finotes.github.io/2018/01/22/android-doc-202)
