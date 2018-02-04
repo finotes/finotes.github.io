@@ -182,7 +182,7 @@ You will be able to configure how API issues are categorized into tickets using 
 Any issue in API calls with same X-URLID will be shown as a single ticket in fi.notes dashboard.
 
 
-### Controller trail
+### Activity trail
 When an issue is raised, inorder to get user screen flow for the current session, you need to extend your Controller from ObservableViewController.
 
 ```swift
