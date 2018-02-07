@@ -1,10 +1,10 @@
 
 
-# Current framework Version : 2.2.0
+# Current framework Version : 2.2.1
 
 ## Change Log
 
-### Version 2.2.0 [Click here to view docs](https://finotes.github.io/2018/02/02/objc-docs)
+### Version 2.2.1 [Click here to view docs](https://finotes.github.io/2018/02/02/objc-docs)
 > Added support for custom bread crumbs
 
 ### Version 2.1.0 [Click here to view docs](https://finotes.github.io/2018/01/19/ios-docs)
