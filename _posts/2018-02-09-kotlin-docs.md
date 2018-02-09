@@ -177,7 +177,6 @@ Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Ret
 ```kotlin
 val client = OkHttp3Client(OkHttpClient.Builder()).build()
 val retrofit = Retrofit.Builder()
-        .baseUrl("http://ws.audioscrobbler.com")
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
