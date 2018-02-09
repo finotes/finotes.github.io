@@ -1,6 +1,6 @@
 
 
-# Current framework Version : 2.2.1
+# Current iOS framework Version : 2.2.1
 
 ## Change Log
 
