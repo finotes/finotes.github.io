@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Android SDK Documentation"
+title: "Android Kotlin SDK Documentation"
 ---
 
 # Android SDK Version: 2.2.1
@@ -53,71 +53,64 @@ If you are using proguard in your release build, you need to add the following t
 ## Initialize
 You need to call the Fn.init() function in your application onCreate() function.
 
-```java
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-	Fn.init(this);
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+        Fn.init(this)
     }
 }
 ```
 
 #### DryRun
 During development, you can set the dryRun mode, so that the issues raised will not be sent to the server. Every other feature except the issue sync to server will work as same.
-```java
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-	//Second parameter in Fn.init() toggles dryRun flag, which is false by default. 
-	Fn.init(this, true , false);
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	//Second parameter in Fn.init() toggles dryRun flag, which is false by default.
+        Fn.init(this, true, false)
     }
 }
 ```
 #### VerboseLog
 There are two variations of logging available in fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
 Activating verbose will print all logs in LogCat including error and warning logs.
-```java
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
 	//Third parameter in Fn.init() toggles the verbose mode.
-	Fn.init(this, true , true);
+	Fn.init(this, false , true);
     }
 }
 ```
 ##### ErrorLog
 If only error and warning logs needs to be printed,
-```java
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        Fn.init(this, true , false);
-        Fn.logError(true);
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	Fn.init(this, true , false);
+        Fn.logError(true)
     }
 }
 ```
 ## Test
 Now that the basic integration of fi.notes SDK is complete,
 Lets make sure that the dashboard and SDK are in sync. 
-```java
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        Fn.init(this, false , true);
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	Fn.init(this, false , true);
         //Fn.issue allows you to raise custom issues.
         //Refer Custom Issue section by the end of this documentation for more details.
         Fn.issue(this, "Test Issue", Severity.MINOR);
     }
 }
 ```
+
 Now run the application in a simulator or real android device (with network connection).  
 Once the application opens up, open [fi.notes dash](https://app.finotes.com/FinotesRS/#/tickets).    
 The issue that we raised should be reported.   
