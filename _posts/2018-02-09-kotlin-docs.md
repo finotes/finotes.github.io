@@ -3,7 +3,7 @@ layout: post
 title: "Android Kotlin SDK Documentation"
 ---
 
-# Android SDK Version: 2.2.1
+# Android Kotlin SDK Version: 2.2.1
 ##### [Change log](https://finotes.github.io/2018/01/22/android-change-log) 
 
 ## Pre requisites
@@ -106,7 +106,7 @@ class BlogApp: Application() {
 	Fn.init(this, false , true);
         //Fn.issue allows you to raise custom issues.
         //Refer Custom Issue section by the end of this documentation for more details.
-        Fn.issue(this, "Test Issue", Severity.MINOR);
+        Fn.reportIssue(this, "Test Issue", Severity.MINOR);
     }
 }
 ```
@@ -121,14 +121,12 @@ If the error still persists, do contact us at [fi.notes contact email](mailto:su
 
 <span style="color:red">*You should remove the Fn.issue() call, else every time the app is run, an issue will be reported.*</span>
 
-```java
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        Fn.init(this, false , true);
-//        Fn.issue(this, "Test Issue", Severity.MINOR);
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	Fn.init(this, false , true);
+//        Fn.reportIssue(this, "Test Issue", Severity.MINOR);
     }
 }
 ```
@@ -136,15 +134,14 @@ public class BlogApp extends Application {
 ### Listen for Issue
 You can listen for and access every issue in realtime using the Fn.listenForIssue() API.  
 You need to add the listener in your Application class.
-```java
-Fn.listenForIssue(new IssueFoundListener() {
-    @Override
-    public void issueFound(IssueView issue) {
-	  ….
-	  ….
-	  ….	
-    }
-});
+
+```kotlin
+Fn.listenForIssue(IssueFoundListener { 
+    issueView: IssueView? ->
+    ...
+    ...
+    ...
+})
 ```
 You will be provided with an Issue object that contains all the issue properties that are being synced to the server, making the whole process transparent.    
 As this callback will be made right after an issue occurrence, you will be able to provide a positive message to the user.
@@ -157,59 +154,54 @@ As this callback will be made right after an issue occurrence, you will be able 
 You need to use the custom OkHttp3Client() provided by fi.notes in your network calls.
 
 
-```java
-    import com.finotes.android.finotescore.OkHttp3Client;
+```kotlin
+    import com.finotes.android.finotescore.OkHttp3Client
     ...
     ...
     
-    client = new OkHttp3Client(new OkHttpClient.Builder()).build();
+    var client = OkHttp3Client(OkHttpClient.Builder()).build()
 ```
 
 Issues like status code errors, timeout issues, exceptions and other failures will be reported for all network calls using custom OkHttp3Client() provided by fi.notes, from your application .
 
 ##### Volley
 In order to add OkHttp3Client to Volley, set the client to OkHttpStack().
-```java
-OkHttp3Client client = new OkHttp3Client(new OkHttpClient.Builder()).build();
-RequestQueue mRequestQueue = 
-	Volley.newRequestQueue(context,new OkHttpStack(client));
-mRequestQueue.add(jsonObjReq);
+```kotlin
+val client = OkHttp3Client(OkHttpClient.Builder()).build()
+val requestQueue = Volley.newRequestQueue(context, OkHttpStack(client))
+requestQueue.add(jsonObjReq)
 ```
 
 ##### Retrofit
 Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Retrofit.Builder()
-```java
-OkHttp3Client client = new OkHttp3Client(new OkHttpClient.Builder()).build();
-Retrofit retrofit = new Retrofit.Builder()
-	.baseUrl(API_URL)
-	.client(client)
-	.addConverterFactory(GsonConverterFactory.create())
-	.build();
-```
+```kotlin
+val client = OkHttp3Client(OkHttpClient.Builder()).build()
+val retrofit = Retrofit.Builder()
+        .baseUrl("http://ws.audioscrobbler.com")
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+ ```
 
 ##### retryOnConnectionFailure 
 ##### connectTimeout
-```java
-OkHttpClient.Builder builder = new OkHttpClient.Builder()
-	.connectTimeout(15, TimeUnit.SECONDS)
-	.retryOnConnectionFailure(false);
-OkHttp3Client  client = new OkHttp3Client(builder).build();
+```kotlin
+val builder = OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS)
+	.retryOnConnectionFailure(false)
+val client = OkHttp3Client(builder).build()
 ```
 
 #### Whitelist Hosts
 Optionally, you may add @Observe annotation to the same Application class where Fn.init() function was called.  
 If Application class is annotated with @Observe, then, only issues from API calls to hosts listed in @Observe will be raised.
 
-```java
-@Observe(domains = {
-        @Domain(hostName = "host.com"),
-        @Domain(hostName = "p.anotherhost.com", timeOut = 8000)
-        })
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Fn.init(this, false , true);
+```kotlin
+@Observe(domains = arrayOf(Domain(hostName = "host.com"),
+        Domain(hostName = "p.anotherhost.com", timeOut = 8000)))
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	Fn.init(this, false , true);
     }
 }
 ```
@@ -220,11 +212,11 @@ Do note that specifying timeout will not interfere in any way with your network 
 #### Categorize Tickets (Optional)
 
 You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
-```java
+```kotlin
        @Headers("X-URLID: loginapi")
 ```
 or
-```java
+```kotlin
        .addHeader("X-URLID","registrationapi")
 ```
 Any issue in API calls with same X-URLID will be shown as a single ticket in fi.notes dashboard.
@@ -234,30 +226,23 @@ Any issue in API calls with same X-URLID will be shown as a single ticket in fi.
 
 When an issue is raised, inorder to get user screen flow for the current session, you need to extend your Activities and Fragments from ObservableActivity or ObservableFragment.
 
-```java
-public class MainActivity extends AppCompatActivity {
+```kotlin
+class MapActivity : AppCompatActivity() {
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 }
 
 Changes to,
 
 
-public class MainActivity extends ObservableAppCompatActivity {
+class MapActivity : ObservableAppCompatActivity() {
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 }
-
 ```
 You may extend from the list below.
 ```
@@ -277,11 +262,11 @@ Activity Trail
     ActivityWelcome:onDestroy    11:19:28:515
     MapActivity:onPause          11:20:17:806
 ```
-### Custom Breadcrumbs
-You can set custom breadcrumbs in your android application using Fn.setBreadCrumb(). These breadcrumbs will be shown along with the activity trail when an issue is reported.
+### Custom Activity Trail
+You can set custom activity markers in your android application using Fn.setActivityMarker(). These markers will be shown along with the activity trail when an issue is reported.
 
-```java
-    Fn.setBreadCrumb(PurchaseActivity.this, "clicked on payment_package_two");
+```kotlin
+    Fn.setActivityMarker(this@PurchaseActivity, "clicked on payment_package_two");
 ```
 
 ```
@@ -304,20 +289,18 @@ Activity Trail
 
 Optionally, You may extend your Application class from ObservableApplication. This will report any app level memory issues that may arise in your application.
 
-```java
-public class BlogApplication extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
     }
 }
 
 Change to,
 
-public class BlogApplication extends ObservableApplication {
-    @Override
-    public void onCreate() {
-        super.onCreate();
+class BlogApp: ObservableApplication() {
+    override fun onCreate() {
+        super.onCreate()
     }
 }
 ```
