@@ -81,7 +81,7 @@ class BlogApp: Application() {
     override fun onCreate() {
         super.onCreate()
 	//Third parameter in Fn.init() toggles the verbose mode.
-	Fn.init(this, false , true);
+	Fn.init(this, false , true)
     }
 }
 ```
@@ -91,7 +91,7 @@ If only error and warning logs needs to be printed,
 class BlogApp: Application() {
     override fun onCreate() {
         super.onCreate()
-	Fn.init(this, true , false);
+	Fn.init(this, true , false)
         Fn.logError(true)
     }
 }
@@ -103,10 +103,10 @@ Lets make sure that the dashboard and SDK are in sync.
 class BlogApp: Application() {
     override fun onCreate() {
         super.onCreate()
-	Fn.init(this, false , true);
+	Fn.init(this, false , true)
         //Fn.issue allows you to raise custom issues.
         //Refer Custom Issue section by the end of this documentation for more details.
-        Fn.reportIssue(this, "Test Issue", Severity.MINOR);
+        Fn.reportIssue(this, "Test Issue", Severity.MINOR)
     }
 }
 ```
@@ -125,8 +125,8 @@ If the error still persists, do contact us at [fi.notes contact email](mailto:su
 class BlogApp: Application() {
     override fun onCreate() {
         super.onCreate()
-	Fn.init(this, false , true);
-//        Fn.reportIssue(this, "Test Issue", Severity.MINOR);
+	Fn.init(this, false , true)
+//        Fn.reportIssue(this, "Test Issue", Severity.MINOR)
     }
 }
 ```
@@ -200,7 +200,7 @@ If Application class is annotated with @Observe, then, only issues from API call
 class BlogApp: Application() {
     override fun onCreate() {
         super.onCreate()
-	Fn.init(this, false , true);
+	Fn.init(this, false , true)
     }
 }
 ```
@@ -448,18 +448,27 @@ public void onHttpCallCompleted(JSONObject httpResponseJSONObject) {
 
 }
 
-public class DBUtils {
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_user)
+    
+    val dbUtils = DbUtils()
+    val userName = Fn.call("getUserNameFromDb", dbUtils, "123-sd-12") as String?
 
-    @Observe(expectedExecutionTime = 2000)
-    public static long getUserTimestampFromJSON(JSONObject response){
-        long userTimestamp = processJSONAndFindUserTimestamp(response);
-        return userTimestamp;
+}
+
+class DbUtils {
+// Static function in Kotlin
+    companion object {
+        @Observe(expectedExecutionTime = 2000)
+        fun getUserTimestampFromJSON(response: JSONObject): Long {
+            return 1
+        }
     }
 
-    @Observe(expectedExecutionTime = 1400)
-    public String getUserNameFromDb(String userId){
-        String userName = User.findById(userId).getName();
-        return userName;
+    @Observe
+    fun getUserNameFromDb(userId: String): String?{
+        return User.findById(userId).getName()
     }
 }
 ```
