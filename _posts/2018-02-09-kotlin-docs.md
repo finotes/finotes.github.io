@@ -104,7 +104,7 @@ class BlogApp: Application() {
     override fun onCreate() {
         super.onCreate()
 	Fn.init(this, false , true)
-        //Fn.issue allows you to raise custom issues.
+        //Fn.reportIssue allows you to raise custom issues.
         //Refer Custom Issue section by the end of this documentation for more details.
         Fn.reportIssue(this, "Test Issue", Severity.MINOR)
     }
@@ -519,7 +519,7 @@ In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
 ```
 
 ### Custom Exceptions
-You can report custom exceptions using the Fn.exception() API.
+You can report custom exceptions using the Fn.reportException() API.
 ```kotlin
         try {
             val jsonObject = JSONObject()
@@ -530,7 +530,7 @@ You can report custom exceptions using the Fn.exception() API.
 ```
 
 ### Custom Issue
-You can report custom issues using the Fn.issue() API.
+You can report custom issues using the Fn.reportIssue() API.
 ```kotlin
     override fun paymentCompleted(userIdentifier:String, type:String){
         //Handle post payment
