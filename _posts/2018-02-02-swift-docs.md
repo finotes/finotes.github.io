@@ -239,14 +239,13 @@ Activity Trail
 	LoginController:viewDidLoad                  09:22:09:670
 ```
 
-### Custom Breadcrumbs
-
-You may add custom breadcrumbs to activity trail, which will be timestamped and shown in their execution order on fi.notes dashboard when an issue is raised.
+### Custom Activity Trail
+You can set custom activity markers in your ios application using Fn.setActivityMarker(). These markers will be shown along with the activity trail when an issue is reported.
 
 ```swift
-        Fn.setBreadCrumb(atTarget: self, forCrumb: "completed login")
+        Fn.setActivityMarker(atTarget: self, forMarker: "completed login")
 	...
-        Fn.setBreadCrumb(atTarget: self, forCrumb: "sending a message")
+        Fn.setActivityMarker(atTarget: self, forMarker: "sending a message")
 ```
 
 ### Function call
