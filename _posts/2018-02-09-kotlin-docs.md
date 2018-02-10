@@ -307,38 +307,31 @@ class BlogApp: ObservableApplication() {
 fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call() and @Observe annotation.  
 A regular function call will be,
 
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user)
+        val userName = getUserNameFromDb("123-sd-12")
+    }
 
-    String userName = getUserNameFromDb("123-sd-12");
-
-}
-
-public String getUserNameFromDb(String userId){
-    String userName = User.findById(userId).getName();
-    return userName;
-}
+    fun getUserNameFromDb(userId: String): String?{
+        return User.findById(userId).getName()
+    }
 ```
 Function “getUserNameFromDb()” call needs to be changed to,
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    
-    String userName = (String) Fn.call("getUserNameFromDb", this, "123-sd-12");
-}
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user)
+        val userName = Fn.call("getUserNameFromDb", this@UserActivity, "123-sd-12") as String?
+    }
 
-@Observe
-public String getUserNameFromDb(String userId){
-    String userName = User.findById(userId).getName();
-    return userName;
-}
+    @Observe
+    fun getUserNameFromDb(userId: String): String?{
+        return User.findById(userId).getName()
+    }
 ```
-You need to tag the function using @Observe annotation and the function should to be 'public'.
+You need to tag the function using @Observe annotation.
 
 This will allow fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
@@ -346,20 +339,17 @@ You can control all the above said parameters in @Observe annotation.
 
 ##### expectedExecutionTime
 
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    
-    String userName = (String) Fn.call("getUserNameFromDb", this, "123-sd-12");
-}
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user)
+        val userName = Fn.call("getUserNameFromDb", this@UserActivity, "123-sd-12") as String?
+    }
 
-@Observe(expectedExecutionTime = 1400)
-public String getUserNameFromDb(String userId){
-    String userName = User.findById(userId).getName();
-    return userName;
-}
+    @Observe(expectedExecutionTime = 1400)
+    fun getUserNameFromDb(userId: String): String?{
+        return User.findById(userId).getName()
+    }
 ```
 ##### Returns NULL
 ##### Exception in function
@@ -370,61 +360,58 @@ An issue will be raised when exception occurs inside a function that is annotate
 #### Function overloading
 
 You need to provide an explicit ID in @Observe annotation to the function incase of function overloading.  
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user)
+        // Here the function name "getUserNameFromDb" is passed in Fn.call().
+        // This will trigger the getUserNameFromDb(String userId) function.
+        val userName = Fn.call("getUserNameFromDb", this@MainActivity, "123-sd-12") as String?
 
-    // Here the function name "getUserNameFromDb" is passed in Fn.call().
-    // This will trigger the getUserNameFromDb(String userId) function.    
-    String userName = (String) Fn.call("getUserNameFromDb", this, "123-sd-12");
+        // Here the id "getUserNameFromDBWithEmailAndToken" specified in
+        // @Observe annotation is passed in Fn.call().
+        // This will trigger the getUserNameFromDb(String email, String token) function.
+        val userNameFromEmail = Fn.call("getUserNameFromDbWithEmailAndToken", this@MainActivity
+                                            , "support@finotes.com", "RENKDS123S") as String?
+    }
 
-    // Here the id "getUserNameFromDBWithEmailAndToken" specified in 
-    // @Observe annotation is passed in Fn.call().
-    // This will trigger the getUserNameFromDb(String email, String token) function.    
-    String userName = (String) Fn.call("getUserNameFromDBWithEmailAndToken", 
-						this, "support@finotes.com", "RENKDS123S");
-}
+    @Observe(expectedExecutionTime = 1400)
+    fun getUserNameFromDb(userId: String): String?{
+        return User.findById(userId).getName()
+    }
 
-@Observe(expectedExecutionTime = 1400)
-public String getUserNameFromDb(String userId){
-    String userName = User.findById(userId).getName();
-    return userName;
-}
-
-@Observe(id = "getUserNameFromDBWithEmailAndToken", expectedExecutionTime = 1400)
-public String getUserNameFromDb(String email, String token){
-    String userName = User.findUniqueByProperties(email,token).getName();
-    return userName;
-}
+    @Observe(id = "getUserNameFromDbWithEmailAndToken", expectedExecutionTime = 1400)
+    fun getUserNameFromDb(email: String, token: String): String?{
+        return User.findUniqueByProperties(email,token).getName()
+    }
 ```
 
 ##### ID
 If a custom id is specified in @Observe annotation, then while calling that function, you need mandatorily to pass the id and not the function name.  
 If no custom id is specified in @Observe annoatation, then you can pass the function name itself as the id.
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user)
 
-//  Function name itself is provided as function getUserNameFromDb(String userId) 
-//	doesnt have any explicit id in its @Observe annotation
-    Fn.call("getUserNameFromDb", this, "123-sd-12");
+	//  Function name itself is provided as function getUserNameFromDb(String userId) 
+	//	doesnt have any explicit id in its @Observe annotation
+        val userName = Fn.call("getUserNameFromDb", this@MainActivity, "123-sd-12") as String?
 
-//  ID 'getUserNameFromDBWithEmailAndToken' is provided as function 
-//      getUserNameFromDb(String email, String token) 
-//	does have an explicit id in its @Observe annotation
-    Fn.call("getUserNameFromDBWithEmailAndToken", 
-						this, "support@finotes.com", "RENKDS123S");
-}
+	//  ID 'getUserNameFromDBWithEmailAndToken' is provided as function 
+	//      getUserNameFromDb(String email, String token) 
+	//	does have an explicit id in its @Observe annotation
+        val userNameFromEmail = Fn.call("getUserNameFromDbWithEmailAndToken", this@MainActivity
+                                            , "support@finotes.com", "RENKDS123S") as String?
+    }
 
-@Observe
-public String getUserNameFromDb(String userId){
-}
+    @Observe
+    fun getUserNameFromDb(userId: String): String?{
+    }
 
-@Observe(id = "getUserNameFromDBWithEmailAndToken")
-public String getUserNameFromDb(String email, String token){
-}
+    @Observe(id = "getUserNameFromDbWithEmailAndToken")
+    fun getUserNameFromDb(email: String, token: String): String?{
+    }
 ```
 
 
