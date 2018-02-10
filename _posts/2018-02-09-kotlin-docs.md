@@ -418,23 +418,20 @@ If no custom id is specified in @Observe annoatation, then you can pass the func
 #### Function in Separate Class file
 
 If the function is defined in a separate class file and needs to be invoked, then instead of passing "this" you can pass the corresponding object in Fn.call()
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_user)
     
-    DBUtils dbUtils = new DbUtils();
-    String userName = (String) Fn.call("getUserNameFromDb", dbUtils, "123-sd-12");
+    val dbUtils = DbUtils();
+    val userName = Fn.call("getUserNameFromDb", dbUtils, "123-sd-12") as String?
 
 }
 
-public class DBUtils {
-
-    @Observe(expectedExecutionTime = 1400)
-    public String getUserNameFromDb(String userId){
-        String userName = User.findById(userId).getName();
-        return userName;
+class DbUtils {
+    @Observe
+    fun getUserNameFromDb(userId: String): String?{
+        return User.findById(userId).getName()
     }
 }
 ```
@@ -519,42 +516,35 @@ In-order to check if you have implemented function chaining correctly, set break
 
 ### Catch Global Exceptions.
 In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState){
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
-    Fn.init(this);
-    Fn.catchUnCaughtExceptions();
-}
-
+```kotlin
+    override fun onCreate() {
+        super.onCreate()
+        Fn.init(this)
+        Fn.catchUnCaughtExceptions()
+    }
 ```
 
 ### Custom Exceptions
 You can report custom exceptions using the Fn.exception() API.
-```java
-try {
-    JSONObject jsonObject = new JSONObject();
-    jsonObject.put("key","value");
-} catch (JSONException exception) {
-    Fn.exception(this, exception);
-}
+```kotlin
+        try {
+            val jsonObject = JSONObject()
+            jsonObject.put("key","value")
+        } catch (exception: Exception) {
+            Fn.reportException(this,exception,Severity.MINOR)
+        }
 ```
 
 ### Custom Issue
 You can report custom issues using the Fn.issue() API.
-```java
-@Override
-private void paymentCompleted(String userIdentifier, int type){
-    //Handle post payment.
-}
+```kotlin
+    @Override fun paymentCompleted(userIdentifier:String, type:String){
+        //Handle post payment
+    }
 
-@Override
-private void paymentFailed(String userIdentifier, String reason){
-    Fn.issue(this, "payment failed for "+reason);
-    //Handle payment failure.
-}
+    @Override fun paymentFailed(userIdentifier:String, reason:String){
+        Fn.reportIssue(this@PaymentActivity, reason, Severity.MAJOR)
+    }
 ```
 
 
