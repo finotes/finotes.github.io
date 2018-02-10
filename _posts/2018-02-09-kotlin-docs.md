@@ -438,31 +438,22 @@ class DbUtils {
 
 #### Static Function calls
 
-For static functions, pass corresponding .class instead of object in Fn.call() to invoke static method.
+For static functions, pass corresponding class instead of object in Fn.call() to invoke static method.
 
-```java
-public void onHttpCallCompleted(JSONObject httpResponseJSONObject) {
-    
-    long userTimestamp = (long) Fn.call("getUserTimestampFromJSON", DBUtils.class,
-    							httpResponseJSONObject);
-
-}
-
+```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_user)
     
-    val dbUtils = DbUtils()
-    val userName = Fn.call("getUserNameFromDb", dbUtils, "123-sd-12") as String?
-
+    var userTimeStamp = Fn.call("getUserTimestampFromJSON",DbUtils,JSONObject()) as Long
 }
 
 class DbUtils {
-// Static function in Kotlin
+    // Static function in Kotlin
     companion object {
         @Observe(expectedExecutionTime = 2000)
         fun getUserTimestampFromJSON(response: JSONObject): Long {
-            return 1
+            return processJSONAndFindUserTimestamp(response)
         }
     }
 
@@ -476,26 +467,20 @@ class DbUtils {
 ### Chained Function calls
 
 You can connect multiple functions using 'nextFunctionId' and 'nextFunctionClass' properties in @Observe annotation.
-```java
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-
-
-	sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-		Fn.call("sendChat", this, chatBox.getText().toString());
-            }
-        });
-
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+       super.onCreate(savedInstanceState)
+       setContentView(R.layout.activity_chat)
+       val sendButton = findViewById<Button>(R.id.sendButton)
+       sendButton.setOnClickListener(View.OnClickListener {
+	    Fn.call("sendChat", this@ChatActivity, chatBox.getText().toString())
+       })
     }
-    
+
     // Here function 'onChatSent' is expected to be called in under '2000' milliseconds.
     @Observe(nextFunctionId = "onChatSent",
-            nextFunctionClass = MainActivity.class)
-    public boolean sendChat(String message){
+            nextFunctionClass = ChatActivity::class)
+    fun sendChat(message: String): Boolean{
 	if(isValid(message)){
 	     syncMessage(message);
 	     return true;
@@ -504,7 +489,7 @@ You can connect multiple functions using 'nextFunctionId' and 'nextFunctionClass
     }
     
     @Observe
-    public void onChatSent(String chatMessageId){
+    override fun onChatSent(chatMessageId: String){
 	chatSyncConfirmed(chatMessageId)
     }
 ```
@@ -547,11 +532,11 @@ You can report custom exceptions using the Fn.exception() API.
 ### Custom Issue
 You can report custom issues using the Fn.issue() API.
 ```kotlin
-    @Override fun paymentCompleted(userIdentifier:String, type:String){
+    override fun paymentCompleted(userIdentifier:String, type:String){
         //Handle post payment
     }
 
-    @Override fun paymentFailed(userIdentifier:String, reason:String){
+    override fun paymentFailed(userIdentifier:String, reason:String){
         Fn.reportIssue(this@PaymentActivity, reason, Severity.MAJOR)
     }
 ```
