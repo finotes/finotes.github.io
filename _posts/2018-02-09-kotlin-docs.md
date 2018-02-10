@@ -423,7 +423,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_user)
     
-    val dbUtils = DbUtils();
+    val dbUtils = DbUtils()
     val userName = Fn.call("getUserNameFromDb", dbUtils, "123-sd-12") as String?
 
 }
