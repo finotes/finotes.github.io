@@ -5,7 +5,7 @@
 ## Change Log
 
 ### Version 2.3.0 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
-> Added support for custom bread crumbs
+> Added support for activity marker
 
 ### Version 2.1.0 [Click here to view docs](https://finotes.github.io/2018/01/19/android-java-docs)
 
