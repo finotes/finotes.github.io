@@ -334,7 +334,8 @@ For static functions, pass corresponding class instead of object in Fn.call() to
 import FinotesCoreSwift
 
 
-        let userTimeStamp :CLongLong = Fn.call(withSelector: #selector(ViewController.getUserTimestampFromJSON),
+        let userTimeStamp :CLongLong = 
+		Fn.call(withSelector: #selector(ViewController.getUserTimestampFromJSON),
                 withTarget: ViewController.classForCoder()) as! CLongLong
 }
 
