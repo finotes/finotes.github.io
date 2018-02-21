@@ -7,7 +7,16 @@ title: "iOS Swift Documentation"
 
 ## Pre requisites
 
-fi.notes framework supports iOS projects with minimum deployment target version 8 or above.
+fi.notes framework supports iOS projects with minimum deployment target version 8 or above.  
+Required Swift Version : > 4.0.3  
+Required xcode Version : > 9.2  
+
+Please recheck your swift version in terminal using 
+```bash
+	$ swift -v
+	Apple Swift version 4.0.3 (swiftlang-900.0.74.1 clang-900.0.39.2)
+	Target: x86_64-apple-macosx10.9
+```
 
 ## Integration
 
