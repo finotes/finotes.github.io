@@ -23,8 +23,8 @@ allprojects {
         maven {
             url "s3://finotescore-android/release"
             credentials(AwsCredentials) {
-                accessKey = <AWS_ACCESS_KEY>
-                secretKey = <AWS_SECRET_KEY>
+                accessKey = <Access Token>
+                secretKey = <Secret>
             }
         }
    }
