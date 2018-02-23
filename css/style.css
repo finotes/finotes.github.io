@@ -38,61 +38,6 @@ dfn { font-style: italic; }
 /** Address variable `h1` font-size and margin within `section` and `article` contexts in Firefox 4+, Safari, and Chrome. */
 h1 { font-size: 2em; margin: 0.67em 0; }
 
-/* nav css */
-
-.topbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: transparent;
-    height: 90px;
-    border-radius: 0;
-    z-index: 910;
-}
-
-.topbar-left {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    flex-shrink: 0;
-    margin-right: 16px;
-}
-
-.topbar-nav {
-    display: -webkit-inline-box;
-    display: inline-flex;
-    -webkit-box-align: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    font-weight: 600;
-    font-size: .75rem;
-    line-height: 90px;
-    z-index: 910;
-}
-
-.topbar-toggler {
-    align-self: flex-start;
-    padding: .25rem .75rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background: 0 0;
-    border: 1px solid transparent;
-    border-radius: .25rem;
-    cursor: pointer;
-    opacity: .6;
-    vertical-align: baseline;
-    -webkit-transition: .2s;
-    transition: .2s;
-    display: none;
-}
-
-.topbar > .container > .topbar-left > .topbar-brand {
-    font-size: 1.875rem;
-    line-height: 1;
-    color: #37404d;
-}
 
 /** Address styling not present in IE 8/9. */
 mark { background: #ff0; color: #000; }
