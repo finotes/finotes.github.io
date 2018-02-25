@@ -1,10 +1,13 @@
 
 
-# Current iOS framework Version : 2.3.0
+# Current iOS framework Version : 2.3.1
 
 ## Change Log
 
-### Version 2.3.0 [Click here to view docs](https://finotes.github.io/2018/02/02/objc-docs)
+### Version 2.3.1 [Click here to view docs](https://finotes.github.io/2018/02/02/objc-docs)
+> Bug fixes and optimizations  
+
+### Version 2.3.0 
 > Added support for activity marker  
 > Added pagination for tickets list in fi.notes. dashboard  
 > Added support for filtering tickets based on platform in fi.notes. dashboard
