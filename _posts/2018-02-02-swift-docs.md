@@ -13,8 +13,8 @@ Required xcode Version : 9.2 or above
 
 Please recheck your swift version in terminal using 
 ```bash
-	$ swift -v
-	Apple Swift version 4.0.3 
+$ swift -v
+Apple Swift version 4.0.3 
 ```
 
 ## Integration
