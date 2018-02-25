@@ -3,19 +3,18 @@ layout: post
 title: "iOS Swift Documentation"
 ---
 
-# Swift framework Version: 2.3.0
+# Swift framework Version: 2.3.1
 
 ## Pre requisites
 
 fi.notes framework supports iOS projects with minimum deployment target version 8 or above.  
-Required Swift Version : > 4.0.3  
-Required xcode Version : > 9.2  
+Required Swift Version : 4.0.3 or above
+Required xcode Version : 9.2 or above
 
 Please recheck your swift version in terminal using 
 ```bash
 	$ swift -v
-	Apple Swift version 4.0.3 (swiftlang-900.0.74.1 clang-900.0.39.2)
-	Target: x86_64-apple-macosx10.9
+	Apple Swift version 4.0.3 
 ```
 
 ## Integration
@@ -24,7 +23,7 @@ You need to add cocoa pods to your project. You can find more information [here]
 After integrating cocoa pods, add FinotesCore to your Podfile.
 
 ```bash
-pod 'FinotesCoreSwift', '2.3.0'
+pod 'FinotesCoreSwift', '2.3.1'
 ```
 
 Then install the same by executing the following command from terminal where your Podfile resides.  
