@@ -356,6 +356,36 @@ You can control all the above said parameters in @Observe annotation.
 Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.  
 An issue will be raised when exception occurs inside a function that is annotated with @Observe and is called using Fn.call().
 
+If you expect a function to return NULL value then, to exempt that function from raising "returns NULL" issue, use "expectNull" field in @Observe annotation.
+```kotlin
+    @Observe(expectNull = true)
+    fun getUserNameFromDb(userId: String): String?{
+    }
+```
+
+##### Expected Boolean value
+If the function annotated with @Observe returns a Boolean value, you may set a expceted value for the same and during execution if the function returns a value other than the expected value, an issue will be raised.
+```kotlin
+    @Observe(expectedBooleanValue = false)
+    fun isValidUser(userId: String): Boolean?{
+    }
+```
+
+##### Return value range
+If the function annotated with @Observe returns a number or decimal value, you may set a range for the same and during execution if the function returns a value outside the specified range, an issue will be raised.
+```kotlin
+    @Observe(min = 10, max = 15)
+    fun getUserCountFromJSON(response: JSONObject): long{
+    }
+    
+    or
+    
+    @Observe(min = 1.1, max = 1.9)
+    fun getUserCountFromJSON(response: JSONObject): float{
+    }
+```
+
+
 
 #### Function overloading
 
