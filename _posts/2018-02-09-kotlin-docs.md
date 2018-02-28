@@ -73,6 +73,8 @@ class BlogApp: Application() {
     }
 }
 ```
+##### When preparing for production release, you need to unset the DryRun flag.
+
 #### VerboseLog
 There are two variations of logging available in fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
 Activating verbose will print all logs in LogCat including error and warning logs.
