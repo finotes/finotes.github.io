@@ -30,15 +30,15 @@ There are 2 possible methods to de-obfuscate stacktrace.
 
 ### Graphical User Interface
 
-You need to open proguardgui.bat (for Windows users) or proguardgui.sh for (Mac or Linux users).  
-proguardgui.bat is located in path-to-sdk/tools/proguard/bin/  
-Execute ./proguardgui.sh for Linux and Mac users from the terminal.  
+1. You need to open proguardgui.bat (for Windows users) or proguardgui.sh for (Mac or Linux users).  
+2. proguardgui.bat is located in path-to-sdk/tools/proguard/bin/  
+3. Execute ./proguardgui.sh for Linux and Mac users from the terminal.  
 
-Go to the "retrace" section on the left side Proguard GUI tool.  
-Set the path to your mapping file generated (automatically) during the release build, usually located at build/outputs/proguard/release/mapping.txt on your application module folder.  
-Copy stacktrace from the fi.notes dashboard and paste it inside box thats titled "obfuscated stack trace".  
+4. Go to the "retrace" section on the left side Proguard GUI tool.  
+5. Set the path to your mapping file generated (automatically) during the release build, usually located at build/outputs/proguard/release/mapping.txt on your application module folder.  
+6. Copy stacktrace from the fi.notes dashboard and paste it inside box thats titled "obfuscated stack trace".  
 
-Click on "Retrace" button.  
+7. Click on "Retrace" button.  
 
 
 
