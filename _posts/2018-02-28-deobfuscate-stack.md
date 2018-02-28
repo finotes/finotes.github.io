@@ -24,6 +24,6 @@
     android.app.ActivityThread.-wrap11(Unknown Source:0)
 ```
 
-### Steps to De-obfuscate stacktrace.
+### Steps to de-obfuscate stacktrace.
 
 There are 2 possible methods to de-obfuscate stacktrace.
