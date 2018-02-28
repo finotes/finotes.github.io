@@ -61,7 +61,7 @@ During development, you can set the dryRun mode, so that the issues raised will 
         return true
     }
 ```
-###### When you go production, you need to unset the DryRun flag.
+##### When preparing for production release, you need to unset the DryRun flag.
 
 #### VerboseLog
 There are two variations of logging available in fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
