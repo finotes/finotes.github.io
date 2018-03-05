@@ -3,7 +3,7 @@ layout: post
 title: "Android Kotlin SDK Documentation"
 ---
 
-# Android Kotlin SDK Version: 2.3.1
+# Android Kotlin SDK Version: 2.3.3
 ##### [Change log](https://finotes.github.io/2018/01/22/android-change-log) 
 
 ## Pre requisites
@@ -34,7 +34,7 @@ You will be able to get Access Token, Secret from 'Apps' section in fi.notes. da
 
 Then in app level build.gradle
 ```gradle
-compile('com.finotes:finotescore:2.3.1@aar') {
+compile('com.finotes:finotescore:2.3.3@aar') {
     transitive = true;
 }
 ```
