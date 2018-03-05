@@ -3,7 +3,9 @@ layout: post
 title: "Android SDK Documentation"
 ---
 
-# Android SDK Version: 2.1.0
+## Android SDK Version: 2.1.0 (Outdated)
+
+### To check [Latest Version Documentation:](https://finotes.github.io/2018/02/02/java-docs)
 
 ## Pre requisites
 
