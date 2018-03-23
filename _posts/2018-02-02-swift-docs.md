@@ -26,12 +26,12 @@ After integrating cocoa pods, add FinotesCore to your Podfile.
 pod 'FinotesCoreSwift', '2.3.1'
 ```
 
+##### The --repo-update option should be used the first time pod install is run from terminal. 
 Then install the same by executing the following command from terminal where your Podfile resides.  
 Here the —repo-update is added incase your local cocoa pods repository is not up to date.
 ```bash
 pod install --repo-update
 ```
-###### The --repo-update option should be used the first time pod install is run from terminal. 
 
 You can import the FinotesCoreSwift to your code using the import statement below.
 
