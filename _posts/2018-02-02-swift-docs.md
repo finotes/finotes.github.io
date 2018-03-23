@@ -311,6 +311,35 @@ import FinotesCoreSwift
 Here the expectedExecutionTime for the function "getUserNameFromDb()" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is nil, then corresponding issues will be raised.  
 An issue will be raised when exception occurs inside a function that is called using Fn.call().
 
+##### Expected Boolean value
+If the function returns a Boolean value, you may set a expected value for the same and during execution if the function returns a value other than the expected value, an issue will be raised.
+```swift
+import FinotesCoreSwift
+
+    let observer : Observer = Fn.observe()
+    observer.expectedBooleanValue(true)
+    Fn.call(withSelector: #selector(isValidUser(_:)), withTarget: self, 
+    					withObserver:observer, withParameters:"123-sd-12")
+}
+
+@objc func isValidUser(_ userId:String) -> Bool?{
+}
+```
+##### Return value range
+If the function returns a number or decimal value, you may set a range for the same and during execution if the function returns a value outside the specified range, an issue will be raised.
+```swift
+import FinotesCoreSwift
+
+    let observer : Observer = Fn.observe()
+    observer.min(10)
+    observer.max(40)
+    Fn.call(withSelector: #selector(getUserPostCount(_:)), withTarget: self, 
+    					withObserver:observer, withParameters:"123-sd-12")
+}
+
+@objc func getUserPostCount(_ userId:String) -> CLongLong{
+}
+```
 
 #### Function in Separate Class file
 
