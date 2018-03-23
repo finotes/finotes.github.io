@@ -39,7 +39,7 @@ compile('com.finotes:finotescore:2.3.3@aar') {
 }
 ```
 
-#### Progruard
+#### Proguard
 If you are using proguard in your release build, you need to add the following to your proguard-rules.pro file.
 
 ```
@@ -129,6 +129,17 @@ class BlogApp: Application() {
         super.onCreate()
 	Fn.init(this, false , true)
 //        Fn.reportIssue(this, "Test Issue", Severity.MINOR)
+    }
+}
+```
+
+## ReleaseBuild
+Make sure that the dryRun and verbose flags are off in your release build along with the [proguard rules specified above](#proguard).
+```kotlin
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+        Fn.init(this) //By default the dryRun and verbose flags are off.
     }
 }
 ```
