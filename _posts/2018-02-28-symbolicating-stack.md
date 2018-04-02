@@ -30,7 +30,7 @@ First you should check that the dSYM gets generated during building,
 
 The location of the generated dSYM varies depending on how the app is built:
 - If you have archived your app, you can explore the package contents of the xcarchive file and will find the dSYMs in there.
-- If the build was not archived then, it’s configured by the Derived Data setting in the Locations section of the Xcode preferences. 
-- Within the Derived Data directory, it’ll have a suffix of .dSYM.
+- If the build was not archived, then it’s configured by the Derived Data settings in the Locations section of the Xcode preferences. 
+- Within the Derived Data directory, location will have a suffix of .dSYM.
 
 Once you have the general location the exact file will be inside a Contents/Resources/DWARF subdirectory.
