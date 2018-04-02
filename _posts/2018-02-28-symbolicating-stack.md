@@ -9,8 +9,10 @@ Location of symbolicatecrash may vary depending on the xcode version, you need t
 
 Steps:
 1. Set the DEVELOPER_DIR environment variable to your Xcode installation path. e.g.
-2. export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
-3. Run the tool
+```bash
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+```
+2. Run the tool
 ```bash
 symbolicatecrash -d <path_to_dsym> -o <path_for_symbolicated_crash> <path_to_crash_report>
 ```
