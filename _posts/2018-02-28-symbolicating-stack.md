@@ -33,4 +33,4 @@ The location of the generated dSYM varies depending on how the app is built:
 - If the build was not archived, then it’s configured by the Derived Data settings in the Locations section of the Xcode preferences. 
 - Within the Derived Data directory, location will have a suffix of .dSYM.
 
-Once you have the general location the exact file will be inside a Contents/Resources/DWARF subdirectory.
+Once you have the general location, the exact file will be inside a Contents/Resources/DWARF subdirectory.
