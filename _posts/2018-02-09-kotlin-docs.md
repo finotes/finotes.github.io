@@ -344,7 +344,7 @@ Function “getUserNameFromDb()” call needs to be changed to,
         return User.findById(userId).getName()
     }
 ```
-You need to tag the function using @Observe annotation.
+###### You need to tag the function using @Observe annotation and should be public, in Kotlin functions are public by default.
 
 This will allow fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
