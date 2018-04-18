@@ -509,56 +509,60 @@ class DbUtils {
 
 ### Chained Function calls
 
-Using chained function calls, you track when a functionality in your app fails.  
+Using chained function calls, you can detect when a functionality in your app fails.  
 
 All app features will have a start function and a success function, using fi.notes SDK you will be able to chain both these functions.  
 You can chain functions using 'nextFunctionId' and 'nextFunctionClass' properties in @Observe annotation.
 
-Lets take a look at an "add to cart" functionality in an ecommerce app.
+Lets take a look at an "add to cart" functionality in an typical ecommerce app.
 #### Use case: Add to cart
-```java
+```kotlin
     @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_listing);
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_product_listing)
+	...
+	...
 	addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-		Fn.call("addItemToCart", ProductListingActivity.this, item.getId());
-            }
-        });
+	    	Fn.call("addItemToCart", this@ProductListingActivity, item.getId())
+	    }
+        })
 
     }
     
     // Here function 'onItemAddedToCart' is expected to be called in under '5000' milliseconds.
     @Observe(nextFunctionId = "onItemAddedToCart",
-            nextFunctionClass = ProductListingActivity.class,
+            nextFunctionClass = ProductListingActivity::class,
 	    expectedChainedExecutionTime = 5000)
-    public boolean addItemToCart(String itemId){
+    fun addItemToCart(itemId :String): Boolean{
 	if(isValid(itemId)){
 	     ... 
 	     ...
-	     return true;
+	     return true
 	}
-	return false;
+	return false
     }
     
     @Override
-    public void onApiCallComplete(JSONObject response){
+    fun onApiCallComplete(response :JSONObject){
 	if(validResponse(response)){
-	     Fn.call("onItemAddedToCart", ProductListingActivity.this, response.getString("id"));
+	     Fn.call("onItemAddedToCart", this@ProductListingActivity, response.getString("id"))
 	}
     }
     
     @Observe
-    public void onItemAddedToCart(String itemId){
-	showMessage(Messages.CARTED_SUCCESS);
+    fun onItemAddedToCart(itemId :String){
+	showMessage(Messages.CARTED_SUCCESS)
+	...
+	...
     }
 ```
 Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using 'nextFunctionId' in @Observe with expectedChainedExecutionTime set to 5000 milliseconds.   
-Now as soon as "addItemToCart" is executed, fi.notes will check for "onItemAddedToCart" to be called. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
+
+Now as soon as "addItemToCart" is executed, fi.notes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
+
 Now if the function "onItemAddedToCart" is executed after 5000 milliseconds, another issue will be raised that says the function "onItemAddedToCart" is called with a delay.
 
 #### Use case: Chat
