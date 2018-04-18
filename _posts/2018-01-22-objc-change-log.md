@@ -3,8 +3,11 @@
 # Current iOS framework Version : 2.3.1
 
 ## Change Log
+### Version 2.4.0 [Click here to view docs](https://finotes.github.io/2018/02/02/objc-docs)
+> Bug fixes and optimizations  
+> Added free memory availability in activity trail
 
-### Version 2.3.1 [Click here to view docs](https://finotes.github.io/2018/02/02/objc-docs)
+### Version 2.3.1 
 > Bug fixes and optimizations  
 
 ### Version 2.3.0 
