@@ -3,7 +3,7 @@ layout: post
 title: "iOS Swift Documentation"
 ---
 
-# Swift framework Version: 2.3.1
+# Swift framework Version: 2.4.0
 
 ## Pre requisites
 
@@ -23,7 +23,7 @@ You need to add cocoa pods to your project. You can find more information [here]
 After integrating cocoa pods, add FinotesCore to your Podfile.
 
 ```bash
-pod 'FinotesCoreSwift', '2.3.1'
+pod 'FinotesCoreSwift', '2.4.0'
 ```
 
 ##### The --repo-update option should be used the first time pod install is run from terminal. 
