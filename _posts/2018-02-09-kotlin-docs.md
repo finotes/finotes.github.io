@@ -267,7 +267,7 @@ Once Activities and Fragments are extended from corresponding Observables, when 
 ```
 Activity Trail
 
-    ActivityWelcome:onCreate     11:19:24:469	1131900928
+    ActivityWelcome:onCreate     11:19:24:469	1131900928 FREE MEMORY (BYTES)
     MapActivity:onCreate         11:19:24:708	1131900928
     MapActivity:onStart          11:19:26:983	1131003904
     MapActivity:onResume         11:19:27:012	1130999808
@@ -284,7 +284,7 @@ You can set custom activity markers in your android application using Fn.setActi
 ```
 Activity Trail
 
-    ActivityWelcome:onCreate                            11:19:24:469	1131900928
+    ActivityWelcome:onCreate                            11:19:24:469	1131900928 FREE MEMORY (BYTES)
     MapActivity:onCreate                                11:19:24:708	1131458560
     MapActivity:onStart                                 11:19:26:983	1131003904
     MapActivity:onResume                                11:19:27:012	1130999808
