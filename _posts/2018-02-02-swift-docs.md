@@ -242,11 +242,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 Once Controllers are extended from ObservableViewController and App functions are implemented, if an issue is raised, on fi.notes dashboard, you will be able to view screen activity for 3 minutes prior to the issue was raised. 
 ```
 Activity Trail
-	LoginController:viewDidLoad                  09:21:53:923
-	LoginController:viewWillAppear               09:21:53:923
-	LoginController:viewDidAppear                09:21:53:927
-	UIApplication:applicationDidBecomeActive     09:21:54:081
-	LoginController:viewDidLoad                  09:22:09:670
+	LoginController:viewDidLoad                  09:21:53:923	1131900928 FREE MEMORY (BYTES)
+	LoginController:viewWillAppear               09:21:53:923	1131458560
+	LoginController:viewDidAppear                09:21:53:927	1131003904
+	UIApplication:applicationDidBecomeActive     09:21:54:081	1130999808
+	LoginController:viewDidLoad                  09:22:09:670	1130622976
 ```
 
 ### Custom Activity Trail
