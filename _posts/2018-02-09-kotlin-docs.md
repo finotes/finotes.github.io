@@ -267,12 +267,12 @@ Once Activities and Fragments are extended from corresponding Observables, when 
 ```
 Activity Trail
 
-    ActivityWelcome:onCreate     11:19:24:469
-    MapActivity:onCreate         11:19:24:708
-    MapActivity:onStart          11:19:26:983
-    MapActivity:onResume         11:19:27:012
-    ActivityWelcome:onDestroy    11:19:28:515
-    MapActivity:onPause          11:20:17:806
+    ActivityWelcome:onCreate     11:19:24:469	1131900928
+    MapActivity:onCreate         11:19:24:708	1131900928
+    MapActivity:onStart          11:19:26:983	1131003904
+    MapActivity:onResume         11:19:27:012	1130999808
+    ActivityWelcome:onDestroy    11:19:28:515	1130622976
+    MapActivity:onPause          11:20:17:806	1129603072
 ```
 ### Custom Activity Trail
 You can set custom activity markers in your android application using Fn.setActivityMarker(). These markers will be shown along with the activity trail when an issue is reported.
@@ -284,16 +284,16 @@ You can set custom activity markers in your android application using Fn.setActi
 ```
 Activity Trail
 
-    ActivityWelcome:onCreate                            11:19:24:469
-    MapActivity:onCreate                                11:19:24:708
-    MapActivity:onStart                                 11:19:26:983
-    MapActivity:onResume                                11:19:27:012
-    ActivityWelcome:onDestroy                           11:19:28:515
-    MapActivity:onPause                                 11:20:17:806
-    PurchaseActivity:onCreate                           11:20:18:106
-    PurchaseActivity:onStart                            11:20:18:404
-    PurchaseActivity:onResume                           11:20:18:906
-    PurchaseActivity:clicked on payment_package_two     11:20:24:235
+    ActivityWelcome:onCreate                            11:19:24:469	1131900928
+    MapActivity:onCreate                                11:19:24:708	1131458560
+    MapActivity:onStart                                 11:19:26:983	1131003904
+    MapActivity:onResume                                11:19:27:012	1130999808
+    ActivityWelcome:onDestroy                           11:19:28:515	1130622976
+    MapActivity:onPause                                 11:20:17:806	1129603072
+    PurchaseActivity:onCreate                           11:20:18:106	1129230336
+    PurchaseActivity:onStart                            11:20:18:404	1129222144
+    PurchaseActivity:onResume                           11:20:18:906	1128136704
+    PurchaseActivity:clicked on payment_package_two     11:20:24:235	1127759872
 ```
 
 
