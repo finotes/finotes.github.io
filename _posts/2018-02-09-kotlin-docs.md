@@ -346,9 +346,107 @@ Function “getUserNameFromDb()” call needs to be changed to,
 
 This will allow fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
-You can control all the above said parameters in @Observe annotation.
+## Asynchronous Chained Function calls
+
+Using chained function calls, you can detect when a functionality in your app fails.  
+
+All app features will have a start function and a success function, using fi.notes SDK you will be able to chain both these functions.  
+You can chain functions using 'nextFunctionId' and 'nextFunctionClass' properties in @Observe annotation.
+
+Lets take a look at an "add to cart" functionality in an typical ecommerce app.
+
+#### Use case: Add to cart
+```kotlin
+    @Override
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_product_listing)
+	...
+	...
+	addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+	    	Fn.call("addItemToCart", this@ProductListingActivity, item.getId())
+	    }
+        })
+
+    }
+    
+    // Here function 'onItemAddedToCart' is expected to be called in under '5000' milliseconds.
+    @Observe(nextFunctionId = "onItemAddedToCart",
+            nextFunctionClass = ProductListingActivity::class,
+	    expectedChainedExecutionTime = 5000)
+    fun addItemToCart(itemId :String): Boolean{
+	if(isValid(itemId)){
+	     ... 
+	     ...
+	     return true
+	}
+	return false
+    }
+    
+    @Override
+    fun onApiCallComplete(response :JSONObject){
+	if(validResponse(response)){
+	     Fn.call("onItemAddedToCart", this@ProductListingActivity, response.getString("id"))
+	}
+    }
+    
+    @Observe
+    fun onItemAddedToCart(itemId :String){
+	showMessage(Messages.CARTED_SUCCESS)
+	...
+	...
+    }
+```
+
+##### nextFunctionId/nextFunctionClass
+Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using 'nextFunctionId'/'nextFunctionClass' in @Observe with expectedChainedExecutionTime set to 5000 milliseconds.   
+
+##### expectedChainedExecutionTime
+Now as soon as "addItemToCart" is executed, fi.notes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
+Now if the function "onItemAddedToCart" is executed after 5000 milliseconds, another issue will be raised that says the function "onItemAddedToCart" is called with a delay.
+
+#### Use case: Chat
+
+```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+       super.onCreate(savedInstanceState)
+       setContentView(R.layout.activity_chat)
+       val sendButton = findViewById<Button>(R.id.sendButton)
+       sendButton.setOnClickListener(View.OnClickListener {
+	    Fn.call("sendChat", this@ChatActivity, chatBox.getText().toString())
+       })
+    }
+
+    // Here function 'onChatSent' is expected to be called in under '2000' milliseconds(default value).
+    @Observe(nextFunctionId = "onChatSent",
+            nextFunctionClass = ChatActivity::class)
+    fun sendChat(message: String): Boolean{
+	if(isValid(message)){
+	     syncMessage(message);
+	     return true;
+	}
+	return false;
+    }
+    
+    @Observe
+    override fun onChatSent(chatMessageId: String){
+	chatSyncConfirmed(chatMessageId)
+    }
+```
+Here 'onChatSent(String chatMessageId)' should be called within 2000 milliseconds(default value) after execution of 'sendChat(String message)'.  
+If the function 'onChatSent' is not called or is delayed then corresponding issues will be raised and reported.
 
 
+##### boolean returns false
+Here in 'sendChat' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
+
+
+#### Test
+In-order to check if you have implemented function chaining correctly, set break points inside the chained functions then run application in your simulator or device, and use your application, if you have implemented correctly, You will hit these breakpoints correctly.
+
+You can control multiple parameters in @Observe annotation.
 ```kotlin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -504,108 +602,6 @@ class DbUtils {
     }
 }
 ```
-
-## Asynchronous Chained Function calls
-
-Using chained function calls, you can detect when a functionality in your app fails.  
-
-All app features will have a start function and a success function, using fi.notes SDK you will be able to chain both these functions.  
-You can chain functions using 'nextFunctionId' and 'nextFunctionClass' properties in @Observe annotation.
-
-Lets take a look at an "add to cart" functionality in an typical ecommerce app.
-
-#### Use case: Add to cart
-```kotlin
-    @Override
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_listing)
-	...
-	...
-	addToCartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-	    	Fn.call("addItemToCart", this@ProductListingActivity, item.getId())
-	    }
-        })
-
-    }
-    
-    // Here function 'onItemAddedToCart' is expected to be called in under '5000' milliseconds.
-    @Observe(nextFunctionId = "onItemAddedToCart",
-            nextFunctionClass = ProductListingActivity::class,
-	    expectedChainedExecutionTime = 5000)
-    fun addItemToCart(itemId :String): Boolean{
-	if(isValid(itemId)){
-	     ... 
-	     ...
-	     return true
-	}
-	return false
-    }
-    
-    @Override
-    fun onApiCallComplete(response :JSONObject){
-	if(validResponse(response)){
-	     Fn.call("onItemAddedToCart", this@ProductListingActivity, response.getString("id"))
-	}
-    }
-    
-    @Observe
-    fun onItemAddedToCart(itemId :String){
-	showMessage(Messages.CARTED_SUCCESS)
-	...
-	...
-    }
-```
-
-##### nextFunctionId/nextFunctionClass
-Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using 'nextFunctionId'/'nextFunctionClass' in @Observe with expectedChainedExecutionTime set to 5000 milliseconds.   
-
-Now as soon as "addItemToCart" is executed, fi.notes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
-
-##### expectedChainedExecutionTime
-Now if the function "onItemAddedToCart" is executed after 5000 milliseconds, another issue will be raised that says the function "onItemAddedToCart" is called with a delay.
-
-#### Use case: Chat
-
-```kotlin
-    override fun onCreate(savedInstanceState: Bundle?) {
-       super.onCreate(savedInstanceState)
-       setContentView(R.layout.activity_chat)
-       val sendButton = findViewById<Button>(R.id.sendButton)
-       sendButton.setOnClickListener(View.OnClickListener {
-	    Fn.call("sendChat", this@ChatActivity, chatBox.getText().toString())
-       })
-    }
-
-    // Here function 'onChatSent' is expected to be called in under '2000' milliseconds.
-    @Observe(nextFunctionId = "onChatSent",
-            nextFunctionClass = ChatActivity::class)
-    fun sendChat(message: String): Boolean{
-	if(isValid(message)){
-	     syncMessage(message);
-	     return true;
-	}
-	return false;
-    }
-    
-    @Observe
-    override fun onChatSent(chatMessageId: String){
-	chatSyncConfirmed(chatMessageId)
-    }
-```
-Here 'onChatSent(String chatMessageId)' should be called within 2000 milliseconds after execution of 'sendChat(String message)'.  
-If the function 'onChatSent' is not called or is delayed then corresponding issues will be raised and reported.
-
-
-##### boolean returns false
-Here in 'sendChat' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
-
-
-#### Test
-In-order to check if you have implemented function chaining correctly, set break points inside the chained functions then run application in your simulator or device, and use your application, if you have implemented correctly, You will hit these breakpoints correctly.
-
 
 ### Catch Global Exceptions.
 In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
