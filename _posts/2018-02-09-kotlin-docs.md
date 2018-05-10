@@ -160,8 +160,6 @@ You will be provided with an Issue object that contains all the issue properties
 As this callback will be made right after an issue occurrence, you will be able to provide a positive message to the user.
 
 
-## Reporting Issues
-
 ### Report Network Call Failure
 
 You need to use the custom OkHttp3Client() provided by fi.notes in your network calls.
@@ -350,7 +348,6 @@ This will allow fi.notes to raise issue incase the function take more than norma
 
 You can control all the above said parameters in @Observe annotation.
 
-##### expectedExecutionTime
 
 ```kotlin
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -364,11 +361,13 @@ You can control all the above said parameters in @Observe annotation.
         return User.findById(userId).getName()
     }
 ```
-##### Returns NULL
-##### Exception in function
+##### expectedExecutionTime
 Here the expectedExecutionTime for the function "getUserNameFromDb" has been overriden to 1400 milliseconds (default was 1000 milliseconds). If the database query takes more than 1400 milliseconds to return the value or if the returned "userName" is NULL, then corresponding issues will be raised.  
+
+##### Exception in function
 An issue will be raised when exception occurs inside a function that is annotated with @Observe and is called using Fn.call().
 
+##### Returns NULL
 If you expect a function to return NULL value then, to exempt that function from raising "returns NULL" issue, use "expectNull" field in @Observe annotation.
 ```kotlin
     @Observe(expectNull = true)
@@ -401,7 +400,6 @@ If the function annotated with @Observe returns a number or decimal value, you m
 
 
 #### Function overloading
-
 You need to provide an explicit ID in @Observe annotation to the function incase of function overloading.  
 ```kotlin
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -507,7 +505,7 @@ class DbUtils {
 }
 ```
 
-### Chained Function calls
+## Asynchronous Chained Function calls
 
 Using chained function calls, you can detect when a functionality in your app fails.  
 
@@ -515,6 +513,7 @@ All app features will have a start function and a success function, using fi.not
 You can chain functions using 'nextFunctionId' and 'nextFunctionClass' properties in @Observe annotation.
 
 Lets take a look at an "add to cart" functionality in an typical ecommerce app.
+
 #### Use case: Add to cart
 ```kotlin
     @Override
@@ -559,10 +558,14 @@ Lets take a look at an "add to cart" functionality in an typical ecommerce app.
 	...
     }
 ```
-Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using 'nextFunctionId' in @Observe with expectedChainedExecutionTime set to 5000 milliseconds.   
+
+##### nextFunctionId
+##### nextFunctionClass
+Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using 'nextFunctionId'/'nextFunctionClass' in @Observe with expectedChainedExecutionTime set to 5000 milliseconds.   
 
 Now as soon as "addItemToCart" is executed, fi.notes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
 
+##### expectedChainedExecutionTime
 Now if the function "onItemAddedToCart" is executed after 5000 milliseconds, another issue will be raised that says the function "onItemAddedToCart" is called with a delay.
 
 #### Use case: Chat
@@ -596,9 +599,6 @@ Now if the function "onItemAddedToCart" is executed after 5000 milliseconds, ano
 Here 'onChatSent(String chatMessageId)' should be called within 2000 milliseconds after execution of 'sendChat(String message)'.  
 If the function 'onChatSent' is not called or is delayed then corresponding issues will be raised and reported.
 
-##### nextFunctionId
-##### nextFunctionClass
-##### expectedChainedExecutionTime
 
 ##### boolean returns false
 Here in 'sendChat' function, if it returns false, an issue will be raised with the function parameters, which will help you dig more into what could have gone wrong.
