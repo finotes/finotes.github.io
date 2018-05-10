@@ -559,8 +559,7 @@ Lets take a look at an "add to cart" functionality in an typical ecommerce app.
     }
 ```
 
-##### nextFunctionId
-##### nextFunctionClass
+##### nextFunctionId/nextFunctionClass
 Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using 'nextFunctionId'/'nextFunctionClass' in @Observe with expectedChainedExecutionTime set to 5000 milliseconds.   
 
 Now as soon as "addItemToCart" is executed, fi.notes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
