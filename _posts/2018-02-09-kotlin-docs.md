@@ -219,6 +219,33 @@ Optionally, You may provide a custom timeout for hostnames. This will raise an I
 ied hosts, that takes more than the specified time for completion.  
 Do note that specifying timeout will not interfere in any way with your network calls.
 
+#### Mask Headers
+You have an option to mask headers, incase they contain sensitive information.
+```java
+@Observe(maskHeaders = {"X-Key", "X-Me"})
+public class BlogApp extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Fn.init(this, false , true);
+    }
+}
+```
+or
+```java
+@Observe(maskHeaders = {"X-Key"})
+public class BlogApp extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Fn.init(this, false , true);
+    }
+}
+```
+This will mask any headers with matching name in both request and response headers before raising the issue to fi.notes dashboard.
+The maskHeaders field is case insensitive.
+
+
 #### Categorize Tickets (Optional)
 
 You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
@@ -314,6 +341,41 @@ class BlogApp: ObservableApplication() {
     }
 }
 ```
+
+
+### Catch Global Exceptions.
+In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
+```kotlin
+    override fun onCreate() {
+        super.onCreate()
+        Fn.init(this)
+        Fn.catchUnCaughtExceptions()
+    }
+```
+
+### Custom Exceptions
+You can report custom exceptions using the Fn.reportException() API.
+```kotlin
+        try {
+            val jsonObject = JSONObject()
+            jsonObject.put("key","value")
+        } catch (exception: Exception) {
+            Fn.reportException(this,exception,Severity.MINOR)
+        }
+```
+
+### Custom Issue
+You can report custom issues using the Fn.reportIssue() API.
+```kotlin
+    override fun paymentCompleted(userIdentifier:String, type:String){
+        //Handle post payment
+    }
+
+    override fun paymentFailed(userIdentifier:String, reason:String){
+        Fn.reportIssue(this@PaymentActivity, reason, Severity.MAJOR)
+    }
+```
+
 ### Function call
 fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call() and @Observe annotation.  
 A regular function call will be,
@@ -602,40 +664,6 @@ class DbUtils {
     }
 }
 ```
-
-### Catch Global Exceptions.
-In-order to catch uncaught exceptions, You may use Fn.catchUnCaughtExceptions().
-```kotlin
-    override fun onCreate() {
-        super.onCreate()
-        Fn.init(this)
-        Fn.catchUnCaughtExceptions()
-    }
-```
-
-### Custom Exceptions
-You can report custom exceptions using the Fn.reportException() API.
-```kotlin
-        try {
-            val jsonObject = JSONObject()
-            jsonObject.put("key","value")
-        } catch (exception: Exception) {
-            Fn.reportException(this,exception,Severity.MINOR)
-        }
-```
-
-### Custom Issue
-You can report custom issues using the Fn.reportIssue() API.
-```kotlin
-    override fun paymentCompleted(userIdentifier:String, type:String){
-        //Handle post payment
-    }
-
-    override fun paymentFailed(userIdentifier:String, reason:String){
-        Fn.reportIssue(this@PaymentActivity, reason, Severity.MAJOR)
-    }
-```
-
 
 
 
