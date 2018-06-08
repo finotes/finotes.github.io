@@ -5,9 +5,9 @@
 ## Change Log
 
 ### Version 2.5.0 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
-> Bug fixes and optimizations
-> Abnormal Memory usage detection
-> Ability to mask function parameters and API header fields
+> Bug fixes and optimizations  
+> Abnormal Memory usage detection  
+> Ability to mask function parameters and API header fields  
 
 ### Version 2.4.0 
 > Bug fixes and optimizations
