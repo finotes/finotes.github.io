@@ -8,6 +8,8 @@
 > Bug fixes and optimizations  
 > Abnormal Memory usage detection  
 > Ability to mask function parameters and API header fields  
+> collectStack() API is depricated, its now replaced with excludeStack()
+>> Stacktrace is automatically collected for all applicable issue types, rendering collectStack() moot.  
 
 ### Version 2.4.0 
 > Bug fixes and optimizations
