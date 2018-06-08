@@ -223,22 +223,20 @@ Do note that specifying timeout will not interfere in any way with your network 
 You have an option to mask headers, incase they contain sensitive information.
 ```java
 @Observe(maskHeaders = {"X-Key", "X-Me"})
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Fn.init(this, false , true);
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	Fn.init(this, false , true)
     }
 }
 ```
 or
 ```java
 @Observe(maskHeaders = {"X-Key"})
-public class BlogApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Fn.init(this, false , true);
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	Fn.init(this, false , true)
     }
 }
 ```
@@ -556,8 +554,22 @@ If the function annotated with @Observe returns a number or decimal value, you m
     fun getUserCountFromJSON(response: JSONObject): float{
     }
 ```
-
-
+##### Mask parameters
+Inorder to mask function parameters before raising an issue, you may use 'mask' field in @Observe.
+```java
+    @Observe(mask = {0})
+    fun getUserCountFromJSON(response: JSONObject): float{
+    }
+```
+Here, incase an issue is raised in function 'getUserCountFromJSON(JSONObject)', the JSONObject value will be masked.  
+You need to provide parameter position starting from 0 in the 'mask' field in @Observe.
+```java
+    @Observe(mask = {1})
+    fun getUserNameFromDb(email: String, token: String): String?{
+        return User.findUniqueByProperties(email,token).getName()
+    }
+```
+Here the field 'String token' will be masked during an issue raise.
 
 #### Function overloading
 You need to provide an explicit ID in @Observe annotation to the function incase of function overloading.  
