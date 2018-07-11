@@ -184,6 +184,34 @@ requestQueue.add(jsonObjReq)
 ```
 You may use the OkHttpStack() from the following [github gist](https://gist.github.com/arvi/f1a0d2a812650c546223642856afe1e9)
 
+Incase you are using a singleton or AppController (Application class) to manage volley objects.
+```kotlin
+	AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+```
+Go to that singleton or Application class and find the function where you have called 
+```kotlin
+    val requestQueue: RequestQueue? = null
+        get() {
+            if (field == null) {
+                return Volley.newRequestQueue(applicationContext)
+            }
+            return field
+        }
+```
+Change this to,
+```kotlin
+    val requestQueue: RequestQueue? = null
+        get() {
+            if (field == null) {
+    	        val client = OkHttp3Client(OkHttpClient.Builder()).build()
+                return Volley.newRequestQueue(context, OkHttpStack(client))
+            }
+            return field
+        }
+```
+You may use the OkHttpStack() from the following [github gist](https://gist.github.com/arvi/f1a0d2a812650c546223642856afe1e9)
+OkHttp3Client() is a custom class that finotes provides, if the fi.notes SDK is connected then it will be auto imported.
+
 ##### Retrofit
 Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Retrofit.Builder()
 ```kotlin
