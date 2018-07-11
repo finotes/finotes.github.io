@@ -182,6 +182,7 @@ val client = OkHttp3Client(OkHttpClient.Builder()).build()
 val requestQueue = Volley.newRequestQueue(context, OkHttpStack(client))
 requestQueue.add(jsonObjReq)
 ```
+You may use the OkHttpStack() from the following [github gist](https://gist.github.com/arvi/f1a0d2a812650c546223642856afe1e9)
 
 ##### Retrofit
 Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Retrofit.Builder()
