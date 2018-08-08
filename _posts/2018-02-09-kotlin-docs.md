@@ -496,6 +496,9 @@ Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using '
 Now as soon as "addItemToCart" is executed, fi.notes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
 Now if the function "onItemAddedToCart" is executed after 5000 milliseconds, another issue will be raised that says the function "onItemAddedToCart" is called with a delay.
 
+##### Note,  
+It is recomended to have no user activity when chaining 2 funtions. lets call functions, A and B. i.e after execution of function A, no user activity (like a click or input) should be required for execution of B.
+
 #### Use case: Chat
 
 ```kotlin
