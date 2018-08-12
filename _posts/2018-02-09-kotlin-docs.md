@@ -161,7 +161,16 @@ As this callback will be made right after an issue occurrence, you will be able 
 
 
 ### Report Network Call Failure
-
+Add @Observe in your Application class.
+```kotlin
+@Observe
+class BlogApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+	Fn.init(this)
+    }
+}
+```
 You need to use the custom OkHttp3Client() provided by fi.notes in your network calls.
 
 
