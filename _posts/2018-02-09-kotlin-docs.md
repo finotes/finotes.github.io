@@ -3,7 +3,7 @@ layout: post
 title: "Android Kotlin SDK Documentation"
 ---
 
-# Android Kotlin SDK Version: 2.5.0
+# Android Kotlin SDK Version: 2.5.1
 ##### [Change log](https://finotes.github.io/2018/01/22/android-change-log) 
 
 ## Pre requisites
@@ -34,7 +34,7 @@ You will be able to get Access Token, Secret from 'Apps' section in fi.notes. da
 
 Then in app level build.gradle
 ```gradle
-implementation('com.finotes:finotescore:2.5.0@aar') {
+implementation('com.finotes:finotescore:2.5.1@aar') {
     transitive = true;
 }
 ```
@@ -161,16 +161,7 @@ As this callback will be made right after an issue occurrence, you will be able 
 
 
 ### Report Network Call Failure
-Add @Observe in your Application class.
-```kotlin
-@Observe
-class BlogApp: Application() {
-    override fun onCreate() {
-        super.onCreate()
-	Fn.init(this)
-    }
-}
-```
+
 You need to use the custom OkHttp3Client() provided by fi.notes in your network calls.
 
 
