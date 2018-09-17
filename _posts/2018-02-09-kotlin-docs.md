@@ -53,8 +53,8 @@ Add the below line incase you want to view the exact line number and source file
 ```
 -keepattributes SourceFile,LineNumberTable
 ```
-Please make sure that the mapping file of your production build (each build) is backed up, inorder to deobfuscate the stacktrace from finotes dashboard.
-Location of mapping file: (<project-folder>app/build/outputs/proguard/release/mapping.txt)
+Please make sure that the mapping file of your production build (each build) is backed up, inorder to deobfuscate the stacktrace from finotes dashboard.  
+Location of mapping file: your-project-folder/app/build/outputs/proguard/release/mapping.txt
 
 ## Initialize
 You need to call the Fn.init() function in your application onCreate() function.
@@ -149,8 +149,8 @@ class BlogApp: Application() {
     }
 }
 ```
-Please make sure that the mapping file of your production build (each build) is backed up, inorder to deobfuscate the stacktrace from finotes dashboard.
-Location of mapping file: (<project-folder>app/build/outputs/proguard/release/mapping.txt)
+Please make sure that the mapping file of your production build (each build) is backed up, inorder to deobfuscate the stacktrace from finotes dashboard.  
+Location of mapping file: your-project-folder/app/build/outputs/proguard/release/mapping.txt
 
 
 ### Listen for Issue
