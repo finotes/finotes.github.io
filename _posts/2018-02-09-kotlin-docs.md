@@ -122,8 +122,8 @@ class BlogApp: Application() {
 Now run the application in a simulator or real android device (with network connection).  
 Once the application opens up, open [fi.notes dash](https://app.finotes.com/FinotesRS/#/tickets).    
 The issue that we raised should be reported.   
-In-case the issue is not listed, make sure the right app is selected at the top of the dashboard.  
-Also, do refer to the logs in LogCat, it will list any errors/warnings that might have occured during the integration.  
+In-case the issue is not listed, make sure the right app and platform is selected at the top of the dashboard.    
+To fix the test issue not synced to the server, [Click Here](https://finotes.github.io/2018/02/28/test-issue-not-synced-java).  
 
 If the error still persists, do contact us at [fi.notes contact email](mailto:support@finotes.com) or you may use the chat support at the bottom right corner.
 
