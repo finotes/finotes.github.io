@@ -230,6 +230,13 @@ val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .build()
  ```
+ Incase you are already using a custom client,
+```kotlin
+	val currentBuilder = new OkHttpClient.Builder()
+	... //Builder customization codes
+	...
+	val client = new OkHttp3Client(currentBuilder).build()	
+```
 
 ##### retryOnConnectionFailure 
 ##### connectTimeout
