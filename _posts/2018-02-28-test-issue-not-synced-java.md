@@ -96,4 +96,6 @@ Just switch your phone to a network connection (3G or 4G) and uninstall the exis
 
 ##### If none of the above steps worked, please do start a chat with our agent, we will fix the issue for you.
 
+<span style="color:red">*Once the integration issue is fixed, you should remove the Fn.reportIssue() call, else every time the app is run, an issue will be reported.*</span>
+
 
