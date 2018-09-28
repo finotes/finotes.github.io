@@ -8,12 +8,12 @@ title: "Android Kotlin SDK Documentation"
 
 ## Pre requisites
 
-fi.notes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
+Finotes SDK supports android projects with minimum SDK version 14 (Ice-cream Sandwich) or
 above.
 
 ## Integration
 
-In-order to integrate fi.notes in your Android project, add the code below to project level build.gradle
+In-order to integrate Finotes in your Android project, add the code below to project level build.gradle
 
 ```gradle
 
@@ -30,7 +30,7 @@ allprojects {
    }
 }
 ```
-You will be able to get Access Token, Secret from 'Apps' section in fi.notes. dashboard.
+You will be able to get Access Token, Secret from 'Apps' section in Finotes dashboard.
 
 Then in app level build.gradle
 ```gradle
@@ -82,7 +82,7 @@ class BlogApp: Application() {
 ##### When preparing for production release, you need to unset the DryRun flag.
 
 #### VerboseLog
-There are two variations of logging available in fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
+There are two variations of logging available in Finotes, Verbose and Error. You can toggle them using corresponding APIs.  
 Activating verbose will print all logs in LogCat including error and warning logs.
 ```kotlin
 class BlogApp: Application() {
@@ -105,7 +105,7 @@ class BlogApp: Application() {
 }
 ```
 ## Test
-Now that the basic integration of fi.notes SDK is complete,  
+Now that the basic integration of Finotes SDK is complete,  
 Lets make sure that the dashboard and SDK are in sync. 
 ##### Step 1. 
 Add **Fn.reportIssue(this, "Test Issue", Severity.MINOR)** under **Fn.init(this, false , true)**
@@ -175,7 +175,7 @@ As this callback will be made right after an issue occurrence, you will be able 
 
 ### Report Network Call Failure
 
-You need to use the custom OkHttp3Client() provided by fi.notes in your network calls.
+You need to use the custom OkHttp3Client() provided by Finotes in your network calls.
 
 
 ```kotlin
@@ -186,7 +186,7 @@ You need to use the custom OkHttp3Client() provided by fi.notes in your network 
     var client = OkHttp3Client(OkHttpClient.Builder()).build()
 ```
 
-Issues like status code errors, timeout issues, exceptions and other failures will be reported for all network calls using custom OkHttp3Client() provided by fi.notes, from your application .
+Issues like status code errors, timeout issues, exceptions and other failures will be reported for all network calls using custom OkHttp3Client() provided by Finotes, from your application .
 
 ##### Volley
 In order to add OkHttp3Client to Volley, set the client to OkHttpStack().
@@ -223,7 +223,7 @@ Change this to,
         }
 ```
 You may use the OkHttpStack() from the following [github gist](https://gist.github.com/arvi/f1a0d2a812650c546223642856afe1e9)  
-OkHttp3Client() is a custom class that finotes provides, if the fi.notes SDK is connected then it will be auto imported.
+OkHttp3Client() is a custom class that finotes provides, if the Finotes SDK is connected then it will be auto imported.
 
 ##### Retrofit
 Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Retrofit.Builder()
@@ -289,13 +289,13 @@ class BlogApp: Application() {
     }
 }
 ```
-This will mask any headers with matching name in both request and response headers before raising the issue to fi.notes dashboard.
+This will mask any headers with matching name in both request and response headers before raising the issue to Finotes dashboard.
 The maskHeaders field is case insensitive.
 
 
 #### Categorize Tickets (Optional)
 
-You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
+You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to Finotes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
 ```kotlin
        @Headers("X-URLID: loginapi")
 ```
@@ -303,7 +303,7 @@ or
 ```kotlin
        .addHeader("X-URLID","registrationapi")
 ```
-Any issue in API calls with same X-URLID will be shown as a single ticket in fi.notes dashboard.
+Any issue in API calls with same X-URLID will be shown as a single ticket in Finotes dashboard.
 
 
 ### Activity trail
@@ -335,7 +335,7 @@ You may extend from the list below.
     ObservableFragmentActivity 
     ObservableFragment
 ```
-Once Activities and Fragments are extended from corresponding Observables, when an issue is raised, on fi.notes dashboard, you will be able to view screen activity for 3 minutes before the issue was raised. 
+Once Activities and Fragments are extended from corresponding Observables, when an issue is raised, on Finotes dashboard, you will be able to view screen activity for 3 minutes before the issue was raised. 
 ```
 Activity Trail
 
@@ -424,7 +424,7 @@ You can report custom issues using the Fn.reportIssue() API.
 ```
 
 ### Function call
-fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call() and @Observe annotation.  
+Finotes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call() and @Observe annotation.  
 A regular function call will be,
 
 ```kotlin
@@ -453,13 +453,13 @@ Function “getUserNameFromDb()” call needs to be changed to,
 ```
 ###### You need to tag the function using @Observe annotation and should be public, in Kotlin functions are public by default.
 
-This will allow fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
+This will allow Finotes to raise issue incase the function take more than normal time to execute, or if the function return a NULL value, or throws an exception.
 
 ## Asynchronous Chained Function calls
 
 Using chained function calls, you can detect when a functionality in your app fails.  
 
-All app features will have a start function and a success function, using fi.notes SDK you will be able to chain both these functions.  
+All app features will have a start function and a success function, using Finotes SDK you will be able to chain both these functions.  
 You can chain functions using 'nextFunctionId' and 'nextFunctionClass' properties in @Observe annotation.
 
 Lets take a look at an "add to cart" functionality in an typical ecommerce app.
@@ -513,7 +513,7 @@ Lets take a look at an "add to cart" functionality in an typical ecommerce app.
 Here, we have connected functions "addItemToCart" to "onItemAddedToCart" using 'nextFunctionId'/'nextFunctionClass' in @Observe with expectedChainedExecutionTime set to 5000 milliseconds.   
 
 ##### expectedChainedExecutionTime
-Now as soon as "addItemToCart" is executed, fi.notes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
+Now as soon as "addItemToCart" is executed, Finotes will listen for "onItemAddedToCart" to be executed. If the same is not called within 5000 milliseconds after the execution of "addItemToCart", an issue will be raised that says the function "onItemAddedToCart" is never called.  
 Now if the function "onItemAddedToCart" is executed after 5000 milliseconds, another issue will be raised that says the function "onItemAddedToCart" is called with a delay.
 
 ##### Note,  
