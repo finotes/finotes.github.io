@@ -105,8 +105,10 @@ class BlogApp: Application() {
 }
 ```
 ## Test
-Now that the basic integration of fi.notes SDK is complete,
+Now that the basic integration of fi.notes SDK is complete,  
 Lets make sure that the dashboard and SDK are in sync. 
+##### Step 1. 
+Add **Fn.reportIssue(this, "Test Issue", Severity.MINOR)** under **Fn.init(this, false , true)**
 ```kotlin
 class BlogApp: Application() {
     override fun onCreate() {
@@ -118,14 +120,16 @@ class BlogApp: Application() {
     }
 }
 ```
-
+##### Step 2. 
 Now run the application in a simulator or real android device (with network connection).  
-Once the application opens up, open [fi.notes dash](https://app.finotes.com/FinotesRS/#/tickets).    
-The issue that we raised should be reported.   
-In-case the issue is not listed, make sure the right app and platform is selected at the top of the dashboard.    
-To fix the test issue not synced to the server, [Click Here](https://finotes.github.io/2018/02/28/test-issue-not-synced-java).  
 
-If the error still persists, do contact us at [fi.notes contact email](mailto:support@finotes.com) or you may use the chat support at the bottom right corner.
+##### Step 3.
+Once the application opens up, open [finotes dash](https://app.finotes.com/#/tickets).    
+The issue that we raised should be reported.   
+
+In-case the issue is not listed, make sure the right app and platform is selected at the top of the dashboard.    
+##### If you still cant find the issue in fintoes dashboard, [Click Here](https://finotes.github.io/2018/02/28/test-issue-not-synced-java).  
+
 
 <span style="color:red">*You should remove the Fn.reportIssue() call, else every time the app is run, an issue will be reported.*</span>
 
