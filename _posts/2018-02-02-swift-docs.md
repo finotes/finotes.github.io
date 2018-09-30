@@ -113,6 +113,8 @@ import FinotesCoreSwift
         return true
     }
 ```
+### Release
+Once you are ready to release the application, if you have activated crash reporting using finotes, you need to back up the dSYM file to symbolicate the crashes as they are reported. [Locating dSYM file](https://finotes.github.io/2018/02/28/symbolicating-stack#locating-dsym-file).
 
 ### Listen for Issue
 You can listen for and access every issue in realtime using the Fn.listenForIssues() API.  
