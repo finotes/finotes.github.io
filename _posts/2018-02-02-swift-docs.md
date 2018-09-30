@@ -4,6 +4,7 @@ title: "iOS Swift Documentation"
 ---
 
 # Swift framework Version: 2.4.0
+##### [Change log](https://finotes.github.io/2018/01/22/objc-change-log) 
 
 ## Pre requisites
 
