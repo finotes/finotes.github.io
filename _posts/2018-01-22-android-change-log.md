@@ -1,15 +1,20 @@
 
 
-# Current Android SDK Version : 2.5.0
+# Current Android SDK Version : 2.5.1
 
 ## Change Log
 
-### Version 2.5.0 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+### Version 2.5.1 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+> Bug fixes and optimizations  
+> Ability to sort API errors using pattern matching
+
+### Version 2.5.0 
 > Bug fixes and optimizations  
 > Abnormal Memory usage detection  
 > Ability to mask function parameters and API header fields  
 > collectStack() API is depricated, its now replaced with excludeStack()
 >> Stacktrace is automatically collected for all applicable issue types, rendering collectStack() moot.  
+
 
 ### Version 2.4.0 
 > Bug fixes and optimizations
