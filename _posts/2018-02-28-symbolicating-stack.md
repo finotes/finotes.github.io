@@ -26,7 +26,7 @@ You can download them by opening the Xcode Organizer, selecting your app, then u
 
 If you’re not using Bitcode, you can find the dSYM files on the machine used to build the app.  
 First you should check that the dSYM gets generated during building,  
-- You cn check for the same in "Debug Information Format" option in build settings in Xcode.  
+- You can check for the same in "Debug Information Format" option in build settings in Xcode.  
 
 The location of the generated dSYM varies depending on how the app is built:
 - If you have archived your app, you can explore the package contents of the xcarchive file and will find the dSYMs in there.
