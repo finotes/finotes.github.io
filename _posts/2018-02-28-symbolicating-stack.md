@@ -14,7 +14,12 @@ export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
 ```
 2. Run the tool
 ```bash
-symbolicatecrash -d <path_to_dsym> -o <path_for_symbolicated_crash> <path_to_crash_report>
+symbolicatecrash -d <path_to_dsym_file> -o <path_to_save_symbolicated_crash> <path_to_crash_report_from_finotes>
+```
+Incase symbolicatecrash is not in your path.
+For xcode 8 or 9
+```bash
+/Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash -d <path_to_dsym_file> -o <path_to_save_symbolicated_crash> <path_to_crash_report_from_finotes>
 ```
 
 
