@@ -4,7 +4,12 @@
 
 ## Change Log
 
-### Version 2.5.1 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+### Version 2.5.2 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+> Minor improvements
+> Added ability to add collaborators
+> Dashboard design improvements
+
+### Version 2.5.1
 > Bug fixes and optimizations  
 > Ability to sort API errors using pattern matching
 
