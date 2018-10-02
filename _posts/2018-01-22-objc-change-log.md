@@ -3,7 +3,7 @@
 # Current iOS framework Version : 2.5.2
 
 ## Change Log
-### Version 2.5.2 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+### Version 2.5.2 [Click here to view docs](https://finotes.github.io/2018/02/02/objc-docs)
 > Minor improvements
 > Added ability to add collaborators
 > Dashboard design improvements
