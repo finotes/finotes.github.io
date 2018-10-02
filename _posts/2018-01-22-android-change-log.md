@@ -1,6 +1,6 @@
 
 
-# Current Android SDK Version : 2.5.1
+# Current Android SDK Version : 2.5.2
 
 ## Change Log
 
