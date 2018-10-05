@@ -2,6 +2,23 @@
 /** 1. Set default font family to sans-serif. 2. Prevent iOS text size adjust after orientation change, without disabling user zoom. */
 html { font-family: Muli; /* 1 */ -ms-text-size-adjust: 100%; /* 2 */ -webkit-text-size-adjust: 100%; /* 2 */ }
 
+#logo {
+    background: transparent url(" finotes.github.io/Logosmall.png") no-repeat scroll 0% 0%;
+    width: 250px;
+    height: 70px;
+    text-indent: -3333px;
+    border: 0;
+    margin: 0;
+}
+
+#logo a {
+    display: block;
+    width: 280px; /* larger than actual image? */
+    height: 120px;
+    text-decoration: none;
+    border: 0;
+}
+
 /** Remove default margin. */
 body { margin: 0; }
 
