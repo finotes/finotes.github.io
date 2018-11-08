@@ -8,7 +8,7 @@ title: "iOS Swift Documentation"
 
 ## Pre requisites
 
-fi.notes framework supports iOS projects with minimum deployment target version 8 or above.   
+Finotes framework supports iOS projects with minimum deployment target version 8 or above.   
 Required Swift Version : 4.0.3 or above  
 Required xcode Version : 9.2 or above  
 
@@ -65,7 +65,7 @@ During development, you can set the dryRun mode, so that the issues raised will 
 ##### When preparing for production release, you need to unset the DryRun flag.
 
 #### VerboseLog
-There are two variations of logging available in fi.notes, Verbose and Error. You can toggle them using corresponding APIs.  
+There are two variations of logging available in Finotes, Verbose and Error. You can toggle them using corresponding APIs.  
 Activating verbose will print all logs in LogCat including error and warning logs.
 ```swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -83,7 +83,7 @@ If only error and warning logs needs to be printed,
     }
 ```
 ## Test
-Now that the basic integration of fi.notes framework is complete,
+Now that the basic integration of Finotes framework is complete,
 Lets make sure that the dashboard and framework are in sync. 
 ```swift
 import FinotesCoreSwift
@@ -96,12 +96,12 @@ import FinotesCoreSwift
 ```
 
 Now run the application in a simulator or real iOS device (with network connection).  
-Once the application opens up, open [fi.notes dash](http://app.finotes.com/FinotesRS/#/tickets).    
+Once the application opens up, open [Finotes dash](http://app.finotes.com/FinotesRS/#/tickets).    
 The issue that we raised should be reported.   
 In-case the issue is not listed, make sure the right app is selected at the top of the dashboard.  
 Also, do refer to the logs in console, it will list any errors/warnings that might have occured during the integration.  
 
-If the error still persists, do contact us at [fi.notes contact email](mailto:support@finotes.com) or you may use the chat support at the bottom right corner.  
+If the error still persists, do contact us at [Finotes contact email](mailto:support@finotes.com) or you may use the chat support at the bottom right corner.  
 
 #### You should remove the Fn.reportIssue() call, else every time the app is run, an issue will be reported.
 
@@ -139,7 +139,7 @@ As this callback will be made right after an issue occurrence, you will be able 
 
 ### Report Network Call Failure
 
-Issues like status code errors, timeout issues and other failures will be reported for all network calls by fi.notes, from your application.  
+Issues like status code errors, timeout issues and other failures will be reported for all network calls by Finotes, from your application.  
 
 If you are using URLSession with shared.dataTask then issues in all REST api calls will be reported automatically.
 ```swift
@@ -188,11 +188,11 @@ Do note that specifying timeout will not interfere in any way with your network 
 
 #### Categorize Tickets (Optional)
 
-You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to fi.notes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
+You will be able to configure how API issues are categorized into tickets using a custom header "X-URLID". You can set this header in your API calls and when they are reported to Finotes dashboard, issues from API calls with same "X-URLID" will be categorized into a single ticket.  
 ```swift
     nsMutableURLRequest.setValue("loginapi", forHTTPHeaderField: "X-URLID")
 ```
-Any issue in API calls with same X-URLID will be shown as a single ticket in fi.notes dashboard.
+Any issue in API calls with same X-URLID will be shown as a single ticket in Finotes dashboard.
 
 
 ### Activity trail
@@ -210,7 +210,7 @@ class ViewController: ObservableViewController {
 ```
 
 ##### Low Memory Reporting 
-Extending Controller from ObservableViewController will also allow fi.notes to report any memory related issues that may occur in your application.
+Extending Controller from ObservableViewController will also allow Finotes to report any memory related issues that may occur in your application.
 
 You may use App functions to report different app states along with Controller trail.
 
@@ -242,7 +242,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 ```
-Once Controllers are extended from ObservableViewController and App functions are implemented, if an issue is raised, on fi.notes dashboard, you will be able to view screen activity for 3 minutes prior to the issue was raised. 
+Once Controllers are extended from ObservableViewController and App functions are implemented, if an issue is raised, on Finotes dashboard, you will be able to view screen activity for 3 minutes prior to the issue was raised. 
 ```
 Activity Trail
 	LoginController:viewDidLoad                  09:21:53:923	1131900928 FREE MEMORY (BYTES)
@@ -262,7 +262,7 @@ You can set custom activity markers in your ios application using Fn.setActivity
 ```
 
 ### Function call
-fi.notes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call().  
+Finotes will report any return value issues, exceptions and execution delays that may arise in functions using Fn.call().  
 A regular function call will be,
 
 ```swift
@@ -289,7 +289,7 @@ import FinotesCoreSwift
 }
 ```
 
-This will allow fi.notes to raise issue incase the function take more than normal time to execute, or if the function return a nil value, or throws an exception.
+This will allow Finotes to raise issue incase the function take more than normal time to execute, or if the function return a nil value, or throws an exception.
 
 You can control all the above said parameters in Observe object.
 
