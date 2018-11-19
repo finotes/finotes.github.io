@@ -93,16 +93,7 @@ class BlogApp: Application() {
     }
 }
 ```
-##### ErrorLog
-If only error and warning logs needs to be printed,
-```kotlin
-class BlogApp: Application() {
-    override fun onCreate() {
-        super.onCreate()
-	Fn.init(this, false , false)
-    }
-}
-```
+
 ## Test
 Now that the basic integration of Finotes SDK is complete,  
 Lets make sure that the dashboard and SDK are in sync. 
