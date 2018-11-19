@@ -99,8 +99,7 @@ If only error and warning logs needs to be printed,
 class BlogApp: Application() {
     override fun onCreate() {
         super.onCreate()
-	Fn.init(this, true , false)
-        Fn.logError(true)
+	Fn.init(this, false , false)
     }
 }
 ```
