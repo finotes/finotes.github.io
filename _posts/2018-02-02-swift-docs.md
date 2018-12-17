@@ -9,7 +9,7 @@ title: "iOS Swift Documentation"
 ## Pre requisites
 
 Finotes framework supports iOS projects with minimum deployment target version 8 or above.   
-Required Swift Version : 4.0.3 
+Required Swift Version : 4.0.3  
 Required xcode Version : 9.2 or above  
 
 Please recheck your swift version in terminal using 
