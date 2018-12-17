@@ -1,10 +1,14 @@
 
 
-# Current Android SDK Version : 2.5.2
+# Current Android SDK Version : 2.5.4
 
 ## Change Log
 
-### Version 2.5.2 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+### Version 2.5.4 [Click here to view docs](https://finotes.github.io/2018/02/02/java-docs)
+> Fn.start and Fn.end based function and feature monitoring
+> Better api tracking 
+
+### Version 2.5.2 
 > Minor improvements
 > Added ability to add collaborators
 > Dashboard design improvements
