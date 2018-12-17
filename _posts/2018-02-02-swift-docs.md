@@ -3,13 +3,13 @@ layout: post
 title: "iOS Swift Documentation"
 ---
 
-# Swift framework Version: 2.5.2
+# Swift framework Version: 2.5.4
 ##### [Change log](https://finotes.github.io/2018/01/22/objc-change-log) 
 
 ## Pre requisites
 
 Finotes framework supports iOS projects with minimum deployment target version 8 or above.   
-Required Swift Version : 4.0.3 or above  
+Required Swift Version : 4.0.3 
 Required xcode Version : 9.2 or above  
 
 Please recheck your swift version in terminal using 
@@ -24,7 +24,7 @@ You need to add cocoa pods to your project. You can find more information [here]
 After integrating cocoa pods, add FinotesCore to your Podfile.
 
 ```bash
-pod 'FinotesCoreSwift', '2.5.2'
+pod 'FinotesCoreSwift', '2.5.4'
 ```
 
 ##### The --repo-update option should be used the first time pod install is run from terminal. 
