@@ -179,6 +179,9 @@ You need to use the custom OkHttp3Client() provided by Finotes in your network c
 Issues like status code errors, timeout issues, exceptions and other failures will be reported for all network calls using custom OkHttp3Client() provided by Finotes, from your application .
 
 ##### Volley
+
+###### Velley 1.0.0
+Incase you are using volley version 1.0.0,
 In order to add OkHttp3Client to Volley, set the client to OkHttpStack().
 ```kotlin
 val client = OkHttp3Client(OkHttpClient.Builder()).build()
@@ -207,13 +210,44 @@ Change this to,
         get() {
             if (field == null) {
     	        val client = OkHttp3Client(OkHttpClient.Builder()).build()
-                return Volley.newRequestQueue(context, OkHttpStack(client))
+                return Volley.newRequestQueue(applicationContext, OkHttpStack(client))
             }
             return field
         }
 ```
 You may use the OkHttpStack() from the following [github gist](https://gist.github.com/arvi/f1a0d2a812650c546223642856afe1e9)  
 OkHttp3Client() is a custom class that finotes provides, if the Finotes SDK is connected then it will be auto imported.
+
+###### Volley 1.1.0
+In case you are using Volley 1.1.0 version.
+
+You may use the HurlStack() from the following [github gist](https://gist.github.com/finotes/d8ef45d490086c731e8d0e6dc385cdbf)
+
+Incase you are using a singleton or AppController (Application class) to manage volley objects.
+```kotlin
+	AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+```
+Go to that singleton or Application class and find the function where you have called 
+```kotlin
+    val requestQueue: RequestQueue? = null
+        get() {
+            if (field == null) {
+                return Volley.newRequestQueue(applicationContext)
+            }
+            return field
+        }
+```
+Change this to,
+```kotlin
+    val requestQueue: RequestQueue? = null
+        get() {
+            if (field == null) {
+                return Volley.newRequestQueue(applicationContext, HurlStack())
+            }
+            return field
+        }
+```
+You may use the HurlStack() from the following [github gist](https://gist.github.com/finotes/d8ef45d490086c731e8d0e6dc385cdbf)
 
 ##### Retrofit
 Adding OkHttp3Client to Retrofit is straight forward, Just call .client() in Retrofit.Builder()
